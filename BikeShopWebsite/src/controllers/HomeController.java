@@ -30,4 +30,14 @@ public class HomeController extends HttpServlet {
 		
 		getServletContext().getRequestDispatcher(jspPage).forward(request, response);
 	}
+	
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		
+		System.out.println("Login attempt with: " + email + " " + password);
+		
+		//TODO NEXT: Implement login
+	}
 }

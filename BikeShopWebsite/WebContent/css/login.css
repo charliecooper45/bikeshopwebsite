@@ -1,0 +1,47 @@
+form { 
+	padding: 20px; 
+	width: 400px; 
+	display: block; 
+	margin: 0 auto;
+	overflow: hidden;
+}
+
+label {
+	color: white;
+	display: inline-block;
+	width: 155px;
+}
+
+.error {
+	display: block;
+	visibility: hidden;
+	color: red;
+	font-style: italic;
+	margin-bottom: 15px;
+	width: 100%;
+}
+
+input {
+	line-height: 25px;
+	padding: 5px;
+	width: 388px;
+	border: 1px solid #E5E5E5;
+	outline: 0;
+	font: normal 15px/150% Verdana, sans-serif;
+}
+
+input:FOCUS {
+	border-color: black;
+	box-shadow: 0 0 8px rgba(0,0,0,.15);
+}
+
+input[type=button] {
+	width: 100%;
+	padding: 10px 10px;
+	background: #617798;
+	margin-top: 10px;
+	font-size: 14px;
+	font-weight: bold;
+	color: #FFFFFF;
+	cursor: pointer;
+}

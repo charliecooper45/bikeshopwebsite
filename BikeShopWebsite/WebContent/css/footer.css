@@ -25,9 +25,7 @@ footer li ul{
 
 footer li a{
     display: block;
-    height: 100%;
     width: 15%;
-    line-height: 100px;
     color: #cccccc;
     text-decoration: none;
     font-size: 2em;

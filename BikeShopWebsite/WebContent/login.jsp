@@ -13,12 +13,13 @@
 
 	<form id="loginform" action="/BikeShopWebsite/HomeController" method="post" >
 		<label for="email">Email:</label>
-		<input type="text" id="email" name="email">
+		<input type="text" id="email" name="email" value="<%= request.getAttribute("email") %>" >
 		<label class="error" id="emailerror">Not a valid e-mail address</label>
 		<label for="password">Password:</label>
-		<input type="password" id="password" name="password">
+		<input type="password" id="password" name="password" >
 		<label class="error" id="passworderror">Password cannot be empty</label>
 		<input type="submit" value="Login" onclick="return validateForm()" />
+		<label id="validationerror"><%= request.getAttribute("validationmessage") %></label>
 	</form>
 	
 	<jsp:include page="footer.jsp" />

@@ -17,8 +17,18 @@ label {
 	visibility: hidden;
 	color: red;
 	font-style: italic;
+	font-weight: bold;
 	margin-bottom: 15px;
 	width: 100%;
+}
+
+#validationerror {
+	display: block;
+	color: red;
+	font-style: italic;
+	font-weight: bold;
+	width: 100%;
+	text-align: center;
 }
 
 input {

@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import beans.User;
+
 /**
  * Servlet implementation class HomeController
  */
@@ -23,6 +25,8 @@ public class HomeController extends HttpServlet {
 		} else {
 			switch(action) {
 			case "login":
+				request.setAttribute("validationmessage", "");
+				request.setAttribute("email", "");
 				jspPage = "/login.jsp";
 				break;
 			}
@@ -33,11 +37,21 @@ public class HomeController extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String jspPage = null;
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		
-		System.out.println("Login attempt with: " + email + " " + password);
+		User user = new User(email, password);
 		
-		//TODO NEXT: Implement login
+		boolean validated = user.validate();
+		
+		if(validated) {
+			jspPage = "/index.jsp";
+		} else {
+			request.setAttribute("email", user.getEmail());
+			request.setAttribute("validationmessage", user.getErrorMessage());
+			jspPage = "/login.jsp";
+		}
+		getServletContext().getRequestDispatcher(jspPage).forward(request, response);
 	}
 }

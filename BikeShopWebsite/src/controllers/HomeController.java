@@ -1,14 +1,12 @@
 package controllers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import beans.User;
+import database.UserDao;
 
 /**
  * Servlet implementation class HomeController
@@ -28,7 +27,7 @@ public class HomeController extends HttpServlet {
 	private DataSource ds;
 
 	@Override
-	public void init(ServletConfig config) throws ServletException {
+	public void init() throws ServletException {
 		try {
 			InitialContext initContext = new InitialContext();
 			
@@ -45,26 +44,6 @@ public class HomeController extends HttpServlet {
 		String action = request.getParameter("action");
 		
 		if(action == null) {
-			// Test database connection code
-			Connection conn = null;
-			
-			try {
-				conn = ds.getConnection();
-			} catch (SQLException e) {
-				e.printStackTrace();
-				return;
-			}
-			
-			// use connection
-			PrintWriter out = response.getWriter();
-			out.println("Connected to database");
-			
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			
 			jspPage = "/index.jsp";
 		} else {
 			switch(action) {
@@ -76,7 +55,7 @@ public class HomeController extends HttpServlet {
 			}
 		}
 		
-		// getServletContext().getRequestDispatcher(jspPage).forward(request, response);
+		getServletContext().getRequestDispatcher(jspPage).forward(request, response);
 	}
 	
 	@Override
@@ -85,9 +64,19 @@ public class HomeController extends HttpServlet {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		
-		User user = new User(email, password);
+		Connection conn = null;
 		
-		boolean validated = user.validate();
+		try {
+			conn = ds.getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		User user = new User(email, password);
+		UserDao userDao = new UserDao(conn);
+		
+		boolean validated = userDao.checkLogin(email, password);
 		
 		if(validated) {
 			jspPage = "/index.jsp";
@@ -96,6 +85,13 @@ public class HomeController extends HttpServlet {
 			request.setAttribute("validationmessage", user.getErrorMessage());
 			jspPage = "/login.jsp";
 		}
+		
 		getServletContext().getRequestDispatcher(jspPage).forward(request, response);
+		
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

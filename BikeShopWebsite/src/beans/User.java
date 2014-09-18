@@ -34,19 +34,4 @@ public class User implements Serializable{
 	public Object getErrorMessage() {
 		return errorMessage;
 	}
-
-	public boolean validate() {
-		System.out.println("Email: " + email);
-		if(!email.equals("charliecooper98@gmail.com")) {
-			errorMessage = "Email is not recognised";
-			return false;
-		}
-		System.out.println("Email recognised!");
-		if(!password.equals("password")) {
-			errorMessage = "Password is incorrect";
-			return false;
-		}
-		
-		return true;
-	}
 }

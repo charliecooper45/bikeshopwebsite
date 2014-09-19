@@ -6,7 +6,6 @@ public class User implements Serializable{
 	private static final long serialVersionUID = -3641491359008054513L;
 	private String email = "";
 	private String password = "";
-	private String errorMessage = "";
 	
 	public User() {}
 	
@@ -29,9 +28,5 @@ public class User implements Serializable{
 	
 	public String getPassword() {
 		return password;
-	}
-	
-	public Object getErrorMessage() {
-		return errorMessage;
 	}
 }

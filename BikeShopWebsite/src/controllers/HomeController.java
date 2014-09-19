@@ -23,30 +23,30 @@ import database.UserDao;
 @WebServlet("/HomeController")
 public class HomeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	private DataSource ds;
 
 	@Override
 	public void init() throws ServletException {
 		try {
 			InitialContext initContext = new InitialContext();
-			
+
 			Context env = (Context) initContext.lookup("java:comp/env");
-			
+
 			ds = (DataSource) env.lookup("jdbc/bikeshopdb");
 		} catch (NamingException e) {
 			throw new ServletException();
 		}
 	}
-	
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String jspPage = null;
 		String action = request.getParameter("action");
-		
-		if(action == null) {
+
+		if (action == null) {
 			jspPage = "/index.jsp";
 		} else {
-			switch(action) {
+			switch (action) {
 			case "login":
 				request.setAttribute("validationmessage", "");
 				request.setAttribute("email", "");
@@ -54,10 +54,10 @@ public class HomeController extends HttpServlet {
 				break;
 			}
 		}
-		
+
 		getServletContext().getRequestDispatcher(jspPage).forward(request, response);
 	}
-	
+
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String jspPage = null;
@@ -68,23 +68,36 @@ public class HomeController extends HttpServlet {
 		
 		try {
 			conn = ds.getConnection();
+			
+			User user = new User(email, password);
+			UserDao userDao = new UserDao(conn);
+			
+			boolean validated = false;
+			
+			// validate the email
+			validated = userDao.validateEmail(email);
+			
+			if(!validated) {
+				request.setAttribute("email", user.getEmail());
+				request.setAttribute("validationmessage", "Email address not recognised");
+				jspPage = "/login.jsp";
+			} else {
+				// email validated so validate the password
+				validated = userDao.validatePassword(password);
+				if(!validated) {
+					request.setAttribute("email", user.getEmail());
+					request.setAttribute("validationmessage", "Incorrect password");
+					jspPage = "/login.jsp";
+				} else {
+					jspPage = "/index.jsp";
+				}
+			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			return;
-		}
-		
-		User user = new User(email, password);
-		UserDao userDao = new UserDao(conn);
-		
-		boolean validated = userDao.checkLogin(email, password);
-		
-		if(validated) {
-			jspPage = "/index.jsp";
-		} else {
-			request.setAttribute("email", user.getEmail());
-			request.setAttribute("validationmessage", user.getErrorMessage());
+			request.setAttribute("validationmessage", "Cannot connect to database");
 			jspPage = "/login.jsp";
 		}
+		
+
 		
 		getServletContext().getRequestDispatcher(jspPage).forward(request, response);
 		

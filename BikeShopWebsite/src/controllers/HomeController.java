@@ -75,7 +75,7 @@ public class HomeController extends HttpServlet {
 			boolean validated = false;
 			
 			// validate the email
-			validated = userDao.validateEmail(email);
+			validated = userDao.validateEmail(user);
 			
 			if(!validated) {
 				request.setAttribute("email", user.getEmail());
@@ -83,7 +83,7 @@ public class HomeController extends HttpServlet {
 				jspPage = "/login.jsp";
 			} else {
 				// email validated so validate the password
-				validated = userDao.validatePassword(password);
+				validated = userDao.validatePassword(user);
 				if(!validated) {
 					request.setAttribute("email", user.getEmail());
 					request.setAttribute("validationmessage", "Incorrect password");

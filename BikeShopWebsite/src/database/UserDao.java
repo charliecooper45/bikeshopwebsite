@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import security.BCrypt;
+import beans.User;
+
 public class UserDao {
 	private Connection conn;
 	
@@ -12,9 +15,9 @@ public class UserDao {
 		this.conn = conn;
 	}
 	
-	public boolean validateEmail(String email) throws SQLException {
+	public boolean validateEmail(User user) throws SQLException {
 		PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) AS count FROM user WHERE email=?");
-		stmt.setString(1, email);
+		stmt.setString(1, user.getEmail());
 		
 		ResultSet rs = stmt.executeQuery();
 		
@@ -31,22 +34,23 @@ public class UserDao {
 		}
 	}
 
-	public boolean validatePassword(String password) throws SQLException {
-		PreparedStatement stmt = conn.prepareStatement("SELECT COUNT(*) AS count FROM user WHERE password=?");
-		stmt.setString(1, password);
+	public boolean validatePassword(User user) throws SQLException {
+		String databasePassword = null;
+		
+		PreparedStatement stmt = conn.prepareStatement("SELECT password FROM user WHERE email=?");
+		stmt.setString(1, user.getEmail());
 		
 		ResultSet rs = stmt.executeQuery();
-		
-		int count = 0;
 		if(rs.next()) {
-			count = rs.getInt("count");
+			databasePassword = rs.getString("password");
+			if(BCrypt.checkpw(user.getPassword(), databasePassword)) {
+				// the hashed password matches the entered password
+				rs.close();
+				return true;
+			}
 		}
-		rs.close();
 		
-		if(count == 0) {
-			return false;
-		} else {
-			return true;
-		}
+		rs.close();
+		return false;
 	}
 }

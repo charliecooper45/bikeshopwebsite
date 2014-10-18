@@ -45,10 +45,11 @@ input:FOCUS {
 	box-shadow: 0 0 8px rgba(0,0,0,.15);
 }
 
-input[type=button] {
-	width: 100%;
+input[type="submit"] {
+	width: 400px;
 	padding: 10px 10px;
 	background: #617798;
+	margin: 0px;
 	margin-top: 10px;
 	font-size: 14px;
 	font-weight: bold;

@@ -52,6 +52,9 @@ public class HomeController extends HttpServlet {
 				request.setAttribute("email", "");
 				jspPage = "/login.jsp";
 				break;
+			case "register":
+				jspPage = "/register.jsp";
+				break;
 			}
 		}
 

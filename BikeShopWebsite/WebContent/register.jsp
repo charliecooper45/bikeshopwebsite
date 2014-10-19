@@ -5,25 +5,37 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<link rel="stylesheet" href="css/login.css">
+	<link rel="stylesheet" href="css/register.css">
 	<script src="javascript/validation.js"></script>
 	<title>Bike Shop</title>
 </head>
 <body>
 	<jsp:include page="header.jsp" />
-
-	<form id="loginForm" action="/BikeShopWebsite/HomeController" method="post" >
+	
+	<form id="registerForm" action="/BikeShopWebsite/HomeController" method="post" >
 		<label for="email">Email:</label>
-		<input type="text" id="email" name="email" value="<%= request.getAttribute("email") %>" />
+		<input type="text" id="email" name="email"/>
 		<label class="error" id="emailError">Not a valid e-mail address</label>
+		
 		<label for="password">Password:</label>
 		<input type="password" id="password" name="password" >
 		<label class="error" id="passwordError">Password cannot be empty</label>
-		<input type="submit" value="Login" onclick="return validateLoginForm()" />
-		<label id="validationError"><%= request.getAttribute("validationmessage") %></label> 
+		
+		<label for="confirmPassword">Confirm password:</label>
+		<input type="password" id="confirmPassword" name="confirmPassword" >
+		<label class="error" id="confirmPasswordError">Confirm password cannot be empty</label>
+		
+		<label for="firstName">First Name:</label>
+		<input type="text" id="firstName" name="firstName" >
+		
+		<label for="surname">Surname:</label>
+		<input type="text" id="surname" name="surname" >
+		
+		<label for="address">Address:</label>
+		<input type="text" id="address" name="address" >
+		
+		<input type="submit" value="Register" onclick="return validateRegisterForm()" />
 	</form>
-	<a href="/BikeShopWebsite/HomeController?action=register">Click here to register</a>
-	
 	<jsp:include page="footer.jsp" />
 </body>
 </html>

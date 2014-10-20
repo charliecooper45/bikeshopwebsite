@@ -12,29 +12,21 @@
 <body>
 	<jsp:include page="header.jsp" />
 	
-	<form id="registerForm" action="/BikeShopWebsite/HomeController" method="post" >
+	<form id="registerForm" action="/BikeShopWebsite/FormController" method="post" >
 		<label for="email">Email:</label>
-		<input type="text" id="email" name="email"/>
+		<input type="text" id="email" name="email" />
 		<label class="error" id="emailError">Not a valid e-mail address</label>
 		
 		<label for="password">Password:</label>
-		<input type="password" id="password" name="password" >
+		<input type="password" id="password" name="password" />
 		<label class="error" id="passwordError">Password cannot be empty</label>
 		
 		<label for="confirmPassword">Confirm password:</label>
 		<input type="password" id="confirmPassword" name="confirmPassword" >
 		<label class="error" id="confirmPasswordError">Confirm password cannot be empty</label>
 		
-		<label for="firstName">First Name:</label>
-		<input type="text" id="firstName" name="firstName" >
-		
-		<label for="surname">Surname:</label>
-		<input type="text" id="surname" name="surname" >
-		
-		<label for="address">Address:</label>
-		<input type="text" id="address" name="address" >
-		
-		<input type="submit" value="Register" onclick="return validateRegisterForm()" />
+		<input type="submit" value="Register" onClick="return validateRegisterForm();" />
+		<input type="hidden" name="formType" value="register"/>
 	</form>
 	<jsp:include page="footer.jsp" />
 </body>

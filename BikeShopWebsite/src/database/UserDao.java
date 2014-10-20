@@ -53,4 +53,22 @@ public class UserDao {
 		rs.close();
 		return false;
 	}
+
+	public boolean registerUser(User user) throws SQLException {
+		PreparedStatement stmt = conn.prepareStatement("INSERT INTO user (email, password) VALUES (?, ?)");
+
+		try {
+			stmt.setString(1, user.getEmail());
+			stmt.setString(2, BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		int success = stmt.executeUpdate();
+		
+		if(success == 0) {
+			return false;
+		}
+		return true;
+	}
 }

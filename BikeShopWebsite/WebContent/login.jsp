@@ -12,7 +12,7 @@
 <body>
 	<jsp:include page="header.jsp" />
 
-	<form id="loginForm" action="/BikeShopWebsite/HomeController" method="post" >
+	<form id="loginForm" action="/BikeShopWebsite/FormController" method="post" >
 		<label for="email">Email:</label>
 		<input type="text" id="email" name="email" value="<%= request.getAttribute("email") %>" />
 		<label class="error" id="emailError">Not a valid e-mail address</label>
@@ -21,6 +21,7 @@
 		<label class="error" id="passwordError">Password cannot be empty</label>
 		<input type="submit" value="Login" onclick="return validateLoginForm()" />
 		<label id="validationError"><%= request.getAttribute("validationmessage") %></label> 
+		<input type="hidden" name="formType" value="login"/>
 	</form>
 	<a href="/BikeShopWebsite/HomeController?action=register">Click here to register</a>
 	

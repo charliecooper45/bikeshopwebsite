@@ -20,7 +20,7 @@
 		<input type="password" id="password" name="password" >
 		<label class="error" id="passwordError">Password cannot be empty</label>
 		<input type="submit" value="Login" onclick="return validateLoginForm()" />
-		<label id="validationError"><%= request.getAttribute("validationmessage") %></label> 
+		<label id="validationError"><%= request.getAttribute("validationMessage") %></label> 
 		<input type="hidden" name="formType" value="login"/>
 	</form>
 	<a href="/BikeShopWebsite/HomeController?action=register">Click here to register</a>

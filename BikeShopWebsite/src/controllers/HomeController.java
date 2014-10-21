@@ -24,11 +24,12 @@ public class HomeController extends HttpServlet {
 		} else {
 			switch (action) {
 			case "login":
-				request.setAttribute("validationmessage", "");
+				request.setAttribute("validationMessage", "");
 				request.setAttribute("email", "");
 				jspPage = "/login.jsp";
 				break;
 			case "register":
+				request.setAttribute("validationMessage", "");
 				jspPage = "/register.jsp";
 				break;
 			}

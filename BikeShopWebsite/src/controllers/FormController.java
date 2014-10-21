@@ -54,24 +54,37 @@ public class FormController extends HttpServlet {
 	}
 
 	private void doRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String jspPage = null;
+		String jspPage = "/register.jsp";
 		Connection conn = null;
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		String confirmPassword = request.getParameter("confirmPassword");
 
-		try {
-			conn = ds.getConnection();
-			User user = new User(email, password);
-			UserDao userDao = new UserDao(conn);
-			boolean added = userDao.registerUser(user);
-			if(added) {
-				jspPage = "/registered.jsp";
+		// check passwords match
+		if (!password.equals(confirmPassword)) {
+			request.setAttribute("validationMessage", "Passwords do not match.");
+		} else {
+			try {
+				conn = ds.getConnection();
+				User user = new User(email, password);
+				UserDao userDao = new UserDao(conn);
+
+				// check account does not exist with email address 
+				boolean emailInUse = userDao.validateEmail(user);
+
+				if (emailInUse) {
+					request.setAttribute("validationMessage", "Email: " + email + " already registered.");
+				} else {
+					boolean added = userDao.registerUser(user);
+					if (!added) {
+						request.setAttribute("validationMessage", "Cannot connect to database");
+					}
+				}
+			} catch (SQLException e) {
+				request.setAttribute("validationMessage", "Cannot connect to database");
 			}
-			//TODO NEXT: this needs to use transactions and show the user an error if necessary
-		} catch (SQLException e) {
-			request.setAttribute("validationmessage", "Cannot connect to database");
 		}
-		
+
 		getServletContext().getRequestDispatcher(jspPage).forward(request, response);
 	}
 
@@ -95,21 +108,23 @@ public class FormController extends HttpServlet {
 
 			if (!validated) {
 				request.setAttribute("email", user.getEmail());
-				request.setAttribute("validationmessage", "Email address not recognised");
+				request.setAttribute("validationMessage", "Email address not recognised");
 				jspPage = "/login.jsp";
 			} else {
 				// email validated so validate the password
 				validated = userDao.validatePassword(user);
 				if (!validated) {
 					request.setAttribute("email", user.getEmail());
-					request.setAttribute("validationmessage", "Incorrect password");
+					request.setAttribute("validationMessage", "Incorrect password");
 					jspPage = "/login.jsp";
 				} else {
+					// the user is now logged in
 					jspPage = "/index.jsp";
+					request.getSession().setAttribute("username", user.getEmail());
 				}
 			}
 		} catch (SQLException e) {
-			request.setAttribute("validationmessage", "Cannot connect to database");
+			request.setAttribute("validationMessage", "Cannot connect to database");
 			jspPage = "/login.jsp";
 		} finally {
 			try {

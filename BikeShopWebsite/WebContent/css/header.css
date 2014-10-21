@@ -1,5 +1,17 @@
 h1 {
-	color: white;
-    font-size: 3.5em;
+    font-size: 3em;
     text-align: center;
+    color: white;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:VISITED {
+	color: white;
+}
+
+a:ACTIVE {
+	color: white;
 }

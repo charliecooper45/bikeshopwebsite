@@ -11,6 +11,8 @@
 
 Hello World!
 
+<%= request.getSession().getAttribute("username") %>
+
 <jsp:include page="footer.jsp" />
 </body>
 </html>

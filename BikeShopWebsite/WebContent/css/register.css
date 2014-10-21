@@ -21,6 +21,15 @@ label {
 	width: 100%;
 }
 
+#validationError {
+	display: block;
+	color: red;
+	font-style: italic;
+	font-weight: bold;
+	width: 100%;
+	text-align: center;
+}
+
 input {
 	height: 15px;
 	padding: 5px;
@@ -45,5 +54,14 @@ input[type="submit"] {
 	font-weight: bold;
 	color: #FFFFFF;
 	cursor: pointer;
-	margin-bottom: 400px;
+	margin-bottom: 5px;
+}
+
+a {
+	display: block;
+	color: white;
+	font-weight: bold;
+	text-decoration: underline;
+	width: 100%;
+	text-align: center;
 }

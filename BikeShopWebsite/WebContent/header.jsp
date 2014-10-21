@@ -5,7 +5,7 @@
     </head>
     <body>
 		<header>
-		    <h1>The Bike Shop</h1>
+		   <h1><a href="/BikeShopWebsite/HomeController">The Bike Shop</a></h1>
 		</header>
     </body>
 </html>

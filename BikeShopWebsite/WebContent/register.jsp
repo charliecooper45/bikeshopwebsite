@@ -26,6 +26,7 @@
 		<label class="error" id="confirmPasswordError">Confirm password cannot be empty</label>
 		
 		<input type="submit" value="Register" onClick="return validateRegisterForm();" />
+		<label id="validationError"><%= request.getAttribute("validationMessage") %></label> 
 		<input type="hidden" name="formType" value="register"/>
 	</form>
 	<jsp:include page="footer.jsp" />

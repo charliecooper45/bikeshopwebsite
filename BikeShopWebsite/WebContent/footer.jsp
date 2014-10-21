@@ -8,12 +8,14 @@
 	<footer>
 	    <!-- Login/Logout Button -->
 	    <ul>
-	    	<c:if test='${sessionScope["username"] == null}'>
-		    	<li><a id="right" href="/BikeShopWebsite/HomeController?action=login">Log In</a></li>
-			</c:if>
-			<c:if test='${sessionScope["username"] != null}'>
-		    	<li><a id="right" href="/BikeShopWebsite/HomeController?action=logout">Log Out</a></li>
-			</c:if>
+			<c:choose>
+				<c:when test='${sessionScope["username"] == null}'>
+					<li><a id="right" href="/BikeShopWebsite/HomeController?action=login">Log In</a></li>
+				</c:when>
+				<c:when test='${sessionScope["username"] != null}'>
+					<li><a id="right" href="/BikeShopWebsite/HomeController?action=logout">Log Out</a></li>
+				</c:when>
+			</c:choose>
 	    </ul>
 	</footer>
 </html>

@@ -4,14 +4,27 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Bike Shop</title>
+	<title>Bike Shop</title>
+	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="javascript/slider.js"></script> 
 </head>
 <body>
 <jsp:include page="header.jsp" />
 
-Hello World!
-
-<%= request.getSession().getAttribute("username") %>
+	<body>
+		<!-- Code adapted from http://codepen.io/zuraizm/pen/vGDHl/ -->
+		<div id="slider">
+		  <a href="#" class="control_next">&gt;</a>
+		  <a href="#" class="control_prev">&lt;</a>
+		  <ul>
+		    <li>SLIDE 1</li>
+		    <li style="background: #aaa;">SLIDE 2</li>
+		    <li>SLIDE 3</li>
+		    <li style="background: #aaa;">SLIDE 4</li>
+		  </ul>  
+		</div>
+	</body>
 
 <jsp:include page="footer.jsp" />
 </body>

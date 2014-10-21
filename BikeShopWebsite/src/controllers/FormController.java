@@ -47,10 +47,19 @@ public class FormController extends HttpServlet {
 		case ("login"):
 			doLogin(request, response);
 			break;
+		case ("logout"):
+			doLogout(request, response);
+			break;
 		case ("register"):
 			doRegister(request, response);
 			break;
 		}
+	}
+
+	private void doLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getSession().invalidate();
+		
+		getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
 	}
 
 	private void doRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

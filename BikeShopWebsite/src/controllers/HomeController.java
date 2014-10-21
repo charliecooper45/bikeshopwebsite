@@ -28,6 +28,9 @@ public class HomeController extends HttpServlet {
 				request.setAttribute("email", "");
 				jspPage = "/login.jsp";
 				break;
+			case "logout":
+				jspPage = "/logout.jsp";
+				break;
 			case "register":
 				request.setAttribute("validationMessage", "");
 				jspPage = "/register.jsp";

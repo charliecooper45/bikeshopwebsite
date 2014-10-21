@@ -1,0 +1,11 @@
+h2 {
+	color: red;
+	text-align: center;
+	margin: 0, auto;
+}
+
+input {
+	display: block; 
+	margin: 0 auto;
+	width: 20%;
+}

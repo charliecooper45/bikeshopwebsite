@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -5,9 +6,14 @@
         <link rel="stylesheet" href="css/footer.css">
     </head>
 	<footer>
-	    <!-- Logout Button -->
+	    <!-- Login/Logout Button -->
 	    <ul>
-	    	<li><a id="right" href="/BikeShopWebsite/HomeController?action=login">Log In</a></li>
+	    	<c:if test='${sessionScope["username"] == null}'>
+		    	<li><a id="right" href="/BikeShopWebsite/HomeController?action=login">Log In</a></li>
+			</c:if>
+			<c:if test='${sessionScope["username"] != null}'>
+		    	<li><a id="right" href="/BikeShopWebsite/HomeController?action=logout">Log Out</a></li>
+			</c:if>
 	    </ul>
 	</footer>
 </html>

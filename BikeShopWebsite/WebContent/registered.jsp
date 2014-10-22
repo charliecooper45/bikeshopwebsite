@@ -10,7 +10,9 @@
 	<jsp:include page="header.jsp" />
 	
 	Thank you for registering with the Bike Shop!
-		
+	
+	<a href="/BikeShopWebsite">Home</a> 
+
 	<jsp:include page="footer.jsp" />
 </body>
 </html>

@@ -23,7 +23,7 @@
 		<label id="validationError"><%= request.getAttribute("validationMessage") %></label> 
 		<input type="hidden" name="formType" value="login"/>
 	</form>
-	<a href="/BikeShopWebsite/HomeController?action=register">Click here to register</a>
+	<a id="register" href="/BikeShopWebsite/HomeController?action=register">Click here to register</a>
 	
 	<jsp:include page="footer.jsp" />
 </body>

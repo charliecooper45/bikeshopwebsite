@@ -87,6 +87,9 @@ public class FormController extends HttpServlet {
 					boolean added = userDao.registerUser(user);
 					if (!added) {
 						request.setAttribute("validationMessage", "Cannot connect to database");
+					} else {
+						// the user has been registered
+						jspPage = "/registered.jsp";
 					}
 				}
 			} catch (SQLException e) {

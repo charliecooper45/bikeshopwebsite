@@ -8,10 +8,10 @@
 	<footer>
 	    	<a id="left" href="/BikeShopWebsite"><img src="resources/images/homeicon.png"></a>
 			<c:choose>
-				<c:when test='${sessionScope["username"] == null}'>
+				<c:when test='${sessionScope["user"] == null}'>
 					<a id="right" href="/BikeShopWebsite/HomeController?action=login">Log In</a>
 				</c:when>
-				<c:when test='${sessionScope["username"] != null}'>
+				<c:when test='${sessionScope["user"] != null}'>
 					<a id="right" href="/BikeShopWebsite/HomeController?action=logout">Log Out</a>
 				</c:when>
 			</c:choose>

@@ -53,6 +53,22 @@ function validateRegisterForm() {
 		validated = false;
 	}
 	
+	var firstName = document.forms["registerForm"]["firstName"].value;
+	if(firstName.trim() == "") {
+		document.getElementById("firstNameError").style.visibility = 'visible';
+		validated = false;
+	} else {
+		document.getElementById("firstNameError").style.visibility = 'hidden';
+	}
+	
+	var surname = document.forms["registerForm"]["surname"].value;
+	if(surname.trim() == "") {
+		document.getElementById("surnameError").style.visibility = 'visible';
+		validated = false;
+	} else {
+		document.getElementById("surnameError").style.visibility = 'hidden';
+	}
+	
 	return validated;
 }
 

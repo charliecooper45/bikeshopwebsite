@@ -22,8 +22,16 @@
 		<label class="error" id="passwordError">Password cannot be empty</label>
 		
 		<label for="confirmPassword">Confirm password:</label>
-		<input type="password" id="confirmPassword" name="confirmPassword" >
+		<input type="password" id="confirmPassword" name="confirmPassword" />
 		<label class="error" id="confirmPasswordError">Confirm password cannot be empty</label>
+		
+		<label for="firstName">First Name:</label>
+		<input type="text" id="firstName" name="firstName" />
+		<label class="error" id="firstNameError">First Name cannot be empty</label>
+		
+		<label for="surname">Surname:</label>
+		<input type="text" id="surname" name="surname" />
+		<label class="error" id="surnameError">Surname cannot be empty</label>
 		
 		<input type="submit" value="Register" onClick="return validateRegisterForm();" />
 		<label id="validationError"><%= request.getAttribute("validationMessage") %></label> 

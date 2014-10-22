@@ -8,11 +8,11 @@
 		<header>
 			<div id="currentStatus">
 				<c:choose>
-					<c:when test='${sessionScope["username"] == null}'>
+					<c:when test='${sessionScope["user"] == null}'>
 						You are not currently logged in.
 					</c:when>
-					<c:when test='${sessionScope["username"] != null}'>
-						Welcome, user.
+					<c:when test='${sessionScope["user"] != null}'>
+						Welcome, <c:out value="${sessionScope.user.firstName}"/> 
 					</c:when>
 				</c:choose>
 			</div>

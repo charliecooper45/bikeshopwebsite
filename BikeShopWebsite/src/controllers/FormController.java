@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import beans.User;
+import database.DaoFactory;
 import database.UserDao;
 
 /**
@@ -68,6 +69,8 @@ public class FormController extends HttpServlet {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		String confirmPassword = request.getParameter("confirmPassword");
+		String firstName = request.getParameter("firstName");
+		String surname = request.getParameter("surname");
 
 		// check passwords match
 		if (!password.equals(confirmPassword)) {
@@ -75,8 +78,8 @@ public class FormController extends HttpServlet {
 		} else {
 			try {
 				conn = ds.getConnection();
-				User user = new User(email, password);
-				UserDao userDao = new UserDao(conn);
+				User user = new User(email, password, firstName, surname);
+				UserDao userDao = DaoFactory.getUserDao(conn);
 
 				// check account does not exist with email address 
 				boolean emailInUse = userDao.validateEmail(user);
@@ -111,7 +114,7 @@ public class FormController extends HttpServlet {
 			conn = ds.getConnection();
 
 			User user = new User(email, password);
-			UserDao userDao = new UserDao(conn);
+			UserDao userDao = DaoFactory.getUserDao(conn);
 
 			boolean validated = false;
 
@@ -132,12 +135,14 @@ public class FormController extends HttpServlet {
 				} else {
 					// the user is now logged in
 					jspPage = "/index.jsp";
-					request.getSession().setAttribute("username", user.getEmail());
+					user = userDao.getUser(user.getEmail());
+					request.getSession().setAttribute("user", user);
 				}
 			}
 		} catch (SQLException e) {
 			request.setAttribute("validationMessage", "Cannot connect to database");
 			jspPage = "/login.jsp";
+			e.printStackTrace();
 		} finally {
 			try {
 				conn.close();

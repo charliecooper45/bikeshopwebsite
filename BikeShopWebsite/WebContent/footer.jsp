@@ -6,16 +6,14 @@
         <link rel="stylesheet" href="css/footer.css">
     </head>
 	<footer>
-	    <!-- Login/Logout Button -->
-	    <ul>
+	    	<a id="left" href="/BikeShopWebsite"><img src="resources/images/homeicon.png"></a>
 			<c:choose>
 				<c:when test='${sessionScope["username"] == null}'>
-					<li><a id="right" href="/BikeShopWebsite/HomeController?action=login">Log In</a></li>
+					<a id="right" href="/BikeShopWebsite/HomeController?action=login">Log In</a>
 				</c:when>
 				<c:when test='${sessionScope["username"] != null}'>
-					<li><a id="right" href="/BikeShopWebsite/HomeController?action=logout">Log Out</a></li>
+					<a id="right" href="/BikeShopWebsite/HomeController?action=logout">Log Out</a>
 				</c:when>
 			</c:choose>
-	    </ul>
 	</footer>
 </html>

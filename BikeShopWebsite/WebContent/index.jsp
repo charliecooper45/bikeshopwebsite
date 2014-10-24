@@ -21,7 +21,7 @@
 		    <li>SLIDE 1</li>
 		    <li style="background: #aaa;">SLIDE 2</li>
 		    <li>SLIDE 3</li>
-		    <li style="background: #aaa;"><a href="/BikeShopWebsite/HomeController?action=viewbikes">BIKES</a></li>
+		    <li style="background: #aaa;"><a href="/BikeShopWebsite/HomeController?action=viewbrands">BIKES</a></li>
 		  </ul>  
 		</div>
 	</body>

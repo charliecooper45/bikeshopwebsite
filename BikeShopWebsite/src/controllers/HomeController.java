@@ -3,6 +3,7 @@ package controllers;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 
 import javax.naming.Context;
@@ -60,9 +61,9 @@ public class HomeController extends HttpServlet {
 				request.setAttribute("validationMessage", "");
 				jspPage = "/register.jsp";
 				break;
-			case "viewbikes":
+			case "viewbrands":
 				doLookupBikeBrands(request, response);
-				jspPage = "/bikes.jsp";
+				jspPage = "/brands.jsp";
 				break;
 			}
 		}
@@ -75,8 +76,10 @@ public class HomeController extends HttpServlet {
 		try {
 			conn = ds.getConnection();
 			List<Brand> brands = DaoFactory.getBrandDao(conn).getBrands();
+			Collections.sort(brands);
 			request.setAttribute("brands", brands);
 		} catch (SQLException e) {
+			e.printStackTrace();
 		} finally {
 			try {
 				conn.close();

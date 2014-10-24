@@ -1,6 +1,6 @@
 package beans;
 
-public class Brand {
+public class Brand implements Comparable<Brand> {
 	private String name;
 	
 	public Brand(String name) {
@@ -18,5 +18,10 @@ public class Brand {
 	@Override
 	public String toString() {
 		return name;
+	}
+
+	@Override
+	public int compareTo(Brand brand) {
+		return name.compareTo(brand.name);
 	}
 }

@@ -1,0 +1,22 @@
+#brands {
+	height: 200px;
+	width: 75%;
+	margin: 5% auto;
+}
+
+.brand {
+	float: left;
+	width: 25%;
+	height: 100px;
+	text-align: center;
+	font-size: 20px;
+	color: white;
+}
+
+.brand a:HOVER {
+	color: grey;
+}
+
+.clear {
+	clear:both;
+}

@@ -18,7 +18,7 @@ public class BrandDao {
 
 	public List<Brand> getBrands() throws SQLException {
 		List<Brand> list = new ArrayList<>();
-		PreparedStatement stmt = conn.prepareStatement("SELECT name FROM bike_brands");
+		PreparedStatement stmt = conn.prepareStatement("SELECT name FROM brand");
 
 		ResultSet rs = stmt.executeQuery();
 		while (rs.next()) {

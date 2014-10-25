@@ -18,12 +18,13 @@ public class BrandDao {
 
 	public List<Brand> getBrands() throws SQLException {
 		List<Brand> list = new ArrayList<>();
-		PreparedStatement stmt = conn.prepareStatement("SELECT name FROM brand");
+		PreparedStatement stmt = conn.prepareStatement("SELECT id, name FROM brand");
 
 		ResultSet rs = stmt.executeQuery();
 		while (rs.next()) {
+			int id = rs.getInt("id");
 			String name = rs.getString("name");
-			list.add(new Brand(name));
+			list.add(new Brand(id, name));
 		}
 		return list;
 	}

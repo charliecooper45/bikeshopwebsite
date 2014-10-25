@@ -11,4 +11,8 @@ public class DaoFactory {
 	public static BrandDao getBrandDao(Connection conn) {
 		return new BrandDao(conn);
 	}
+	
+	public static BikeModelDao getBikeModelDao(Connection conn) {
+		return new BikeModelDao(conn);
+	}
 }

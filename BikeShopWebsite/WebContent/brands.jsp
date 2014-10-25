@@ -17,7 +17,7 @@
     			<div class="clear"></div>
 			</c:if>
 			<div class="brand">
-				<a href=""><c:out value="${brand}" /></a>
+				<a href="/BikeShopWebsite/BikeController?brand=${brand.id}"><c:out value="${brand}" /></a>
 			</div>
 		</c:forEach>
 	</div>

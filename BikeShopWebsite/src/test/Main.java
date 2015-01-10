@@ -2,6 +2,7 @@ package test;
 
 import hibernate.utils.HibernateUtilities;
 
+import org.apache.log4j.BasicConfigurator;
 import org.hibernate.Session;
 
 public class Main {

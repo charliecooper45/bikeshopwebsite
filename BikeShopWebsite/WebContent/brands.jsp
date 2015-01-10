@@ -13,9 +13,6 @@
 
 	<div id="brands">
 		<c:forEach items="${requestScope.brands}" var="brand" varStatus="i">
-			<c:if test="${i.count % 5 == 0}">
-    			<div class="clear"></div>
-			</c:if>
 			<div class="brand">
 				<a href="/BikeShopWebsite/BikeController?brand=${brand.id}"><c:out value="${brand}" /></a>
 			</div>

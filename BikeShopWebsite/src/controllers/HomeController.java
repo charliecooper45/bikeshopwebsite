@@ -1,14 +1,12 @@
 package controllers;
 
+import hibernate.classes.Brand;
+import hibernate.utils.HibernateUtilities;
+
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,8 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import database.DaoFactory;
-import beans.Brand;
+import org.apache.log4j.Logger;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  * Servlet implementation class HomeController
@@ -26,19 +26,20 @@ import beans.Brand;
 public class HomeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	private static final Logger LOG = Logger.getLogger(HomeController.class);
+	
 	private DataSource ds;
+	private Session session;
 
 	@Override
 	public void init() throws ServletException {
-		try {
-			InitialContext initContext = new InitialContext();
-
-			Context env = (Context) initContext.lookup("java:comp/env");
-
-			ds = (DataSource) env.lookup("jdbc/bikeshopdb");
-		} catch (NamingException e) {
-			throw new ServletException();
-		}
+		//TODO: c3p0 connection pool?
+		session = HibernateUtilities.getSessionFactory().openSession();
+	}
+	
+	@Override
+	public void destroy() {
+		HibernateUtilities.shutdown();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -71,21 +72,12 @@ public class HomeController extends HttpServlet {
 		getServletContext().getRequestDispatcher(jspPage).forward(request, response);
 	}
 
+	@SuppressWarnings("unchecked")
 	private void doLookupBikeBrands(HttpServletRequest request, HttpServletResponse response) {
-		Connection conn =  null;
-		try {
-			conn = ds.getConnection();
-			List<Brand> brands = DaoFactory.getBrandDao(conn).getBrands();
-			Collections.sort(brands);
-			request.setAttribute("brands", brands);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+		Query namedQuery = session.getNamedQuery(Brand.QUERY_ALL);
+		List<Brand> brands = namedQuery.list();
+		LOG.info("Found " + brands.size() + " brands in database");
+		Collections.sort(brands);
+		request.setAttribute("brands", brands);
 	}
 }

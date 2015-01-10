@@ -1,7 +1,6 @@
 package controllers;
 
 import hibernate.classes.Brand;
-import hibernate.utils.HibernateUtilities;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -9,38 +8,17 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 
-import org.apache.log4j.Logger;
 import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 /**
  * Servlet implementation class HomeController
  */
 @WebServlet("/HomeController")
-public class HomeController extends HttpServlet {
+public class HomeController extends AbstractController {
 	private static final long serialVersionUID = 1L;
-	
-	private static final Logger LOG = Logger.getLogger(HomeController.class);
-	
-	private DataSource ds;
-	private Session session;
-
-	@Override
-	public void init() throws ServletException {
-		//TODO: c3p0 connection pool?
-		session = HibernateUtilities.getSessionFactory().openSession();
-	}
-	
-	@Override
-	public void destroy() {
-		HibernateUtilities.shutdown();
-	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String jspPage = null;

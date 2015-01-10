@@ -15,9 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import database.DaoFactory;
 import beans.BikeModel;
 import beans.Brand;
+import database.DaoFactory;
 
 /**
  * Servlet implementation class BikeController

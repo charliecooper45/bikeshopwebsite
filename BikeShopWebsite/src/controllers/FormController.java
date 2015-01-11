@@ -71,7 +71,6 @@ public class FormController extends AbstractController {
 				String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 				Transaction tx = session.beginTransaction();
 				user = new User(email, hashedPassword, firstName, surname);
-				//TODO: possible check if user was inserted?
 				session.save(user);
 				tx.commit();
 				jspPage = "/registered.jsp";
@@ -82,7 +81,6 @@ public class FormController extends AbstractController {
 	}
 
 	private void doLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//TODO: change the implementation so login works
 		String jspPage = null;
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");

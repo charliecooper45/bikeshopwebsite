@@ -45,8 +45,13 @@ public class HomeController extends AbstractController {
 				jspPage = "/register.jsp";
 				break;
 			case "viewbrands":
-				doLookupBikeBrands(request, response);
-				jspPage = "/brands.jsp";
+				boolean lookupSuccessful = doLookupBikeBrands(request, response);
+
+				if (lookupSuccessful) {
+					jspPage = "/brands.jsp";
+				} else {
+					jspPage = "/error.jsp";
+				}
 				break;
 			}
 		}
@@ -55,17 +60,17 @@ public class HomeController extends AbstractController {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void doLookupBikeBrands(HttpServletRequest request, HttpServletResponse response) {
-		if (HibernateUtilities.isConnectedToDatabase()) {
+	private boolean doLookupBikeBrands(HttpServletRequest request, HttpServletResponse response) {
+		try {
 			Query namedQuery = session.getNamedQuery(Brand.QUERY_ALL);
 			List<Brand> brands = namedQuery.list();
 			LOG.info("Found " + brands.size() + " brands in database");
 			Collections.sort(brands);
 			request.setAttribute("brands", brands);
-		} else {
-			// the connection to the database has been lost
+			return true;
+		} catch (Exception e) {
 			LOG.info("Connection to database lost");
-			//TODO: send to error page
+			return false;
 		}
 	}
 }

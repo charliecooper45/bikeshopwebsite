@@ -57,48 +57,25 @@ public class FormController extends AbstractController {
 			request.setAttribute("validationMessage", "Passwords do not match.");
 		} else {
 			// check an account does not already exist with the given email address
-			Query namedQuery = session.getNamedQuery(User.QUERY_IF_EMAIL_IN_USE);
+			Query namedQuery = session.getNamedQuery(User.QUERY_USER_BY_EMAIL);
 			LOG.info("Checking for existing user with email: " + email);
 			namedQuery.setParameter("email", email);
-			boolean emailInUse = ((Long) namedQuery.uniqueResult() > 0);
+			User user = (User) namedQuery.uniqueResult();
 			
-			if (emailInUse) {
+			if (user != null) {
 				LOG.info("Email is already in use");
 				request.setAttribute("validationMessage", "Email: " + email + " already registered.");
 			} else {
 				//TODO: how is the situation where database connection is lost handled?
-				LOG.info("Email not in use, register new user");
+				LOG.info("Email not in use, register new user.");
 				String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 				Transaction tx = session.beginTransaction();
-				User user = new User(email, hashedPassword, firstName, surname);
+				user = new User(email, hashedPassword, firstName, surname);
 				//TODO: possible check if user was inserted?
 				session.save(user);
 				tx.commit();
 				jspPage = "/registered.jsp";
 			}
-			
-//			try {
-//				conn = ds.getConnection();
-//				User user = new User(email, password, firstName, surname);
-//				UserDao userDao = DaoFactory.getUserDao(conn);
-//
-//				// check account does not exist with email address 
-//				boolean emailInUse = userDao.validateEmail(user);
-//
-//				if (emailInUse) {
-//					request.setAttribute("validationMessage", "Email: " + email + " already registered.");
-//				} else {
-//					boolean added = userDao.registerUser(user);
-//					if (!added) {
-//						request.setAttribute("validationMessage", "Cannot connect to database");
-//					} else {
-//						// the user has been registered
-//						jspPage = "/registered.jsp";
-//					}
-//				}
-//			} catch (SQLException e) {
-//				request.setAttribute("validationMessage", "Cannot connect to database");
-//			}
 		}
 
 		getServletContext().getRequestDispatcher(jspPage).forward(request, response);
@@ -106,9 +83,36 @@ public class FormController extends AbstractController {
 
 	private void doLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//TODO: change the implementation so login works
-//		String jspPage = null;
-//		String email = request.getParameter("email");
-//		String password = request.getParameter("password");
+		String jspPage = null;
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		
+		// check if an account with the given email address exists
+		Query namedQuery = session.getNamedQuery(User.QUERY_USER_BY_EMAIL);
+		LOG.info("Checking for existing user with email: " + email);
+		namedQuery.setParameter("email", email);
+		User user = (User) namedQuery.uniqueResult();
+		
+		if(user == null) {
+			LOG.info("The user with email address " + email + " does not exist.");
+			request.setAttribute("email", email);
+			request.setAttribute("validationMessage", "Email address not recognised");
+			jspPage = "/login.jsp";
+		} else {
+			LOG.info("User with email address " + email + " exists. Check password...");
+			if (!BCrypt.checkpw(password, user.getPassword())) {
+				LOG.info("Password is incorrect");
+				request.setAttribute("email", user.getEmail());
+				request.setAttribute("validationMessage", "Incorrect password");
+				jspPage = "/login.jsp";
+			} else {
+				LOG.info("Password is correct");
+				jspPage = "/index.jsp";
+				request.getSession().setAttribute("user", user);
+			}
+		}
+		
+		getServletContext().getRequestDispatcher(jspPage).forward(request, response);
 //
 //		Connection conn = null;
 //

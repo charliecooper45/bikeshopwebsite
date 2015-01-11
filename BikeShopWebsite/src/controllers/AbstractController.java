@@ -17,7 +17,6 @@ public abstract class AbstractController extends HttpServlet {
 	
 	@Override
 	public void init() throws ServletException {
-		//TODO: c3p0 connection pool?
 		session = HibernateUtilities.getSessionFactory().openSession();
 	}
 	

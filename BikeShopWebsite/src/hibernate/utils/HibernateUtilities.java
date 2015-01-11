@@ -5,6 +5,7 @@ import org.hibernate.cfg.Configuration;
 
 public class HibernateUtilities {
 	private static final SessionFactory sessionFactory = buildSessionFactory();
+	private static boolean connectedToDatabase = true;
 
 	private static SessionFactory buildSessionFactory() {
 		try {
@@ -22,5 +23,13 @@ public class HibernateUtilities {
 
 	public static void shutdown() {
 		getSessionFactory().close();
+	}
+
+	public synchronized static boolean isConnectedToDatabase() {
+		return connectedToDatabase;
+	}
+
+	public synchronized static void setConnectedToDatabase(boolean connectedToDatabase) {
+		HibernateUtilities.connectedToDatabase = connectedToDatabase;
 	}
 }

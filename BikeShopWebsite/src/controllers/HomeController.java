@@ -1,6 +1,7 @@
 package controllers;
 
 import hibernate.classes.Brand;
+import hibernate.utils.HibernateUtilities;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.Query;
+import org.hibernate.exception.JDBCConnectionException;
 
 /**
  * Servlet implementation class HomeController
@@ -19,6 +21,8 @@ import org.hibernate.Query;
 @WebServlet("/HomeController")
 public class HomeController extends AbstractController {
 	private static final long serialVersionUID = 1L;
+
+	// TODO: add logging
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String jspPage = null;
@@ -52,10 +56,16 @@ public class HomeController extends AbstractController {
 
 	@SuppressWarnings("unchecked")
 	private void doLookupBikeBrands(HttpServletRequest request, HttpServletResponse response) {
-		Query namedQuery = session.getNamedQuery(Brand.QUERY_ALL);
-		List<Brand> brands = namedQuery.list();
-		LOG.info("Found " + brands.size() + " brands in database");
-		Collections.sort(brands);
-		request.setAttribute("brands", brands);
+		if (HibernateUtilities.isConnectedToDatabase()) {
+			Query namedQuery = session.getNamedQuery(Brand.QUERY_ALL);
+			List<Brand> brands = namedQuery.list();
+			LOG.info("Found " + brands.size() + " brands in database");
+			Collections.sort(brands);
+			request.setAttribute("brands", brands);
+		} else {
+			// the connection to the database has been lost
+			LOG.info("Connection to database lost");
+			//TODO: send to error page
+		}
 	}
 }

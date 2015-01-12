@@ -20,6 +20,8 @@ import security.BCrypt;
 @WebServlet("/FormController")
 public class FormController extends AbstractController {
 	private static final long serialVersionUID = 1L;
+	
+	//TODO: handle loss of database connection
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -66,7 +68,6 @@ public class FormController extends AbstractController {
 				LOG.info("Email is already in use");
 				request.setAttribute("validationMessage", "Email: " + email + " already registered.");
 			} else {
-				//TODO: how is the situation where database connection is lost handled?
 				LOG.info("Email not in use, register new user.");
 				String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 				Transaction tx = session.beginTransaction();

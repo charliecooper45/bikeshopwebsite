@@ -50,6 +50,7 @@ public class HomeController extends AbstractController {
 				if (lookupSuccessful) {
 					jspPage = "/brands.jsp";
 				} else {
+					//TODO: implement error.jsp
 					jspPage = "/error.jsp";
 				}
 				break;

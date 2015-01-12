@@ -1,7 +1,6 @@
 package controllers;
 
 import hibernate.classes.Brand;
-import hibernate.utils.HibernateUtilities;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -13,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.hibernate.Query;
-import org.hibernate.exception.JDBCConnectionException;
 
 /**
  * Servlet implementation class HomeController
@@ -28,50 +26,43 @@ public class HomeController extends AbstractController {
 		String jspPage = null;
 		String action = request.getParameter("action");
 
-		if (action == null) {
-			jspPage = "/index.jsp";
-		} else {
-			switch (action) {
-			case "login":
-				request.setAttribute("validationMessage", "");
-				request.setAttribute("email", "");
-				jspPage = "/login.jsp";
-				break;
-			case "logout":
-				jspPage = "/logout.jsp";
-				break;
-			case "register":
-				request.setAttribute("validationMessage", "");
-				jspPage = "/register.jsp";
-				break;
-			case "viewbrands":
-				boolean lookupSuccessful = doLookupBikeBrands(request, response);
-
-				if (lookupSuccessful) {
+		try {
+			if (action == null) {
+				jspPage = "/index.jsp";
+			} else {
+				switch (action) {
+				case "login":
+					request.setAttribute("validationMessage", "");
+					request.setAttribute("email", "");
+					jspPage = "/login.jsp";
+					break;
+				case "logout":
+					jspPage = "/logout.jsp";
+					break;
+				case "register":
+					request.setAttribute("validationMessage", "");
+					jspPage = "/register.jsp";
+					break;
+				case "viewbrands":
+					doLookupBikeBrands(request, response);
 					jspPage = "/brands.jsp";
-				} else {
-					//TODO: implement error.jsp
-					jspPage = "/error.jsp";
+					break;
 				}
-				break;
 			}
+		} catch (Exception e) {
+			LOG.info("Connection to database lost");
+			jspPage = "/error.jsp";
+		} finally {
+			getServletContext().getRequestDispatcher(jspPage).forward(request, response);
 		}
-
-		getServletContext().getRequestDispatcher(jspPage).forward(request, response);
 	}
 
 	@SuppressWarnings("unchecked")
-	private boolean doLookupBikeBrands(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			Query namedQuery = session.getNamedQuery(Brand.QUERY_ALL);
-			List<Brand> brands = namedQuery.list();
-			LOG.info("Found " + brands.size() + " brands in database");
-			Collections.sort(brands);
-			request.setAttribute("brands", brands);
-			return true;
-		} catch (Exception e) {
-			LOG.info("Connection to database lost");
-			return false;
-		}
+	private void doLookupBikeBrands(HttpServletRequest request, HttpServletResponse response) {
+		Query namedQuery = session.getNamedQuery(Brand.QUERY_ALL);
+		List<Brand> brands = namedQuery.list();
+		LOG.info("Found " + brands.size() + " brands in database");
+		Collections.sort(brands);
+		request.setAttribute("brands", brands);
 	}
 }

@@ -26,6 +26,7 @@ import database.DaoFactory;
 public class BikeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	//TODO: change this class, hibernate support and exception handling
 	private DataSource ds;
 
 	@Override

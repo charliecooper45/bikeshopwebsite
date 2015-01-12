@@ -20,33 +20,40 @@ import security.BCrypt;
 @WebServlet("/FormController")
 public class FormController extends AbstractController {
 	private static final long serialVersionUID = 1L;
-	
-	//TODO: handle loss of database connection
+
+	// TODO: handle loss of database connection
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String form = request.getParameter("formType");
+		String jspPage = null;
 
-		switch (form) {
-		case ("login"):
-			doLogin(request, response);
-			break;
-		case ("logout"):
-			doLogout(request, response);
-			break;
-		case ("register"):
-			doRegister(request, response);
-			break;
+		try {
+			switch (form) {
+			case ("login"):
+				jspPage = doLogin(request, response);
+			case ("logout"):
+				jspPage = doLogout(request, response);
+				break;
+			case ("register"):
+				jspPage = doRegister(request, response);
+				break;
+			}
+		} catch (Exception e) {
+			LOG.info("Connection to database lost");
+			jspPage = "/error.jsp";
+		} finally {
+			getServletContext().getRequestDispatcher(jspPage).forward(request, response);
 		}
 	}
 
-	private void doLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private String doLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getSession().invalidate();
-		
-		getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+
+		return "/index.jsp";
 	}
 
-	private void doRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private String doRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String jspPage = "/register.jsp";
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
@@ -58,12 +65,13 @@ public class FormController extends AbstractController {
 		if (!password.equals(confirmPassword)) {
 			request.setAttribute("validationMessage", "Passwords do not match.");
 		} else {
-			// check an account does not already exist with the given email address
+			// check an account does not already exist with the given email
+			// address
 			Query namedQuery = session.getNamedQuery(User.QUERY_USER_BY_EMAIL);
 			LOG.info("Checking for existing user with email: " + email);
 			namedQuery.setParameter("email", email);
 			User user = (User) namedQuery.uniqueResult();
-			
+
 			if (user != null) {
 				LOG.info("Email is already in use");
 				request.setAttribute("validationMessage", "Email: " + email + " already registered.");
@@ -78,21 +86,21 @@ public class FormController extends AbstractController {
 			}
 		}
 
-		getServletContext().getRequestDispatcher(jspPage).forward(request, response);
+		return jspPage;
 	}
 
-	private void doLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private String doLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String jspPage = null;
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		
+
 		// check if an account with the given email address exists
 		Query namedQuery = session.getNamedQuery(User.QUERY_USER_BY_EMAIL);
 		LOG.info("Checking for existing user with email: " + email);
 		namedQuery.setParameter("email", email);
 		User user = (User) namedQuery.uniqueResult();
-		
-		if(user == null) {
+
+		if (user == null) {
 			LOG.info("The user with email address " + email + " does not exist.");
 			request.setAttribute("email", email);
 			request.setAttribute("validationMessage", "Email address not recognised");
@@ -110,52 +118,7 @@ public class FormController extends AbstractController {
 				request.getSession().setAttribute("user", user);
 			}
 		}
-		
-		getServletContext().getRequestDispatcher(jspPage).forward(request, response);
-//
-//		Connection conn = null;
-//
-//		try {
-//			conn = ds.getConnection();
-//
-//			User user = new User(email, password);
-//			UserDao userDao = DaoFactory.getUserDao(conn);
-//
-//			boolean validated = false;
-//
-//			// validate the email
-//			validated = userDao.validateEmail(user);
-//
-//			if (!validated) {
-//				request.setAttribute("email", user.getEmail());
-//				request.setAttribute("validationMessage", "Email address not recognised");
-//				jspPage = "/login.jsp";
-//			} else {
-//				// email validated so validate the password
-//				validated = userDao.validatePassword(user);
-//				if (!validated) {
-//					request.setAttribute("email", user.getEmail());
-//					request.setAttribute("validationMessage", "Incorrect password");
-//					jspPage = "/login.jsp";
-//				} else {
-//					// the user is now logged in
-//					jspPage = "/index.jsp";
-//					user = userDao.getUser(user.getEmail());
-//					request.getSession().setAttribute("user", user);
-//				}
-//			}
-//		} catch (SQLException e) {
-//			request.setAttribute("validationMessage", "Cannot connect to database");
-//			jspPage = "/login.jsp";
-//			e.printStackTrace();
-//		} finally {
-//			try {
-//				conn.close();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//
-//		getServletContext().getRequestDispatcher(jspPage).forward(request, response);
+
+		return jspPage;
 	}
 }

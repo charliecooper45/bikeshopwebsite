@@ -21,8 +21,6 @@ import security.BCrypt;
 public class FormController extends AbstractController {
 	private static final long serialVersionUID = 1L;
 
-	// TODO: handle loss of database connection
-
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String form = request.getParameter("formType");

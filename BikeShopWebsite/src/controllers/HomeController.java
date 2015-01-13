@@ -1,6 +1,7 @@
 package controllers;
 
 import hibernate.classes.Brand;
+import hibernate.utils.HibernateUtilities;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -21,6 +22,9 @@ public class HomeController extends AbstractController {
 	private static final long serialVersionUID = 1L;
 
 	// TODO: add logging
+	static {
+		HibernateUtilities.createTestData();
+	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String jspPage = null;

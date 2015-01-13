@@ -1,71 +1,38 @@
 package controllers;
 
+import hibernate.classes.BikeModel;
+
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 
-import beans.BikeModel;
-import beans.Brand;
-import database.DaoFactory;
+import org.hibernate.Query;
 
 /**
  * Servlet implementation class BikeController
  */
 @WebServlet("/BikeController")
-public class BikeController extends HttpServlet {
+public class BikeController extends AbstractController {
 	private static final long serialVersionUID = 1L;
 	
-	//TODO: change this class, hibernate support and exception handling
-	private DataSource ds;
-
-	@Override
-	public void init() throws ServletException {
-		try {
-			InitialContext initContext = new InitialContext();
-
-			Context env = (Context) initContext.lookup("java:comp/env");
-
-			ds = (DataSource) env.lookup("jdbc/bikeshopdb");
-		} catch (NamingException e) {
-			throw new ServletException();
-		}
-	}
-       
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int brand = Integer.parseInt(request.getParameter("brand"));
-		List<BikeModel> models = doLookupBikes(new Brand(brand, ""));
-		
+		int brandId = Integer.parseInt(request.getParameter("brand"));
+		List<BikeModel> models = doLookupBikes(brandId);
+		//TODO: implement bike models jsp page
 	}
 	
-	private List<BikeModel> doLookupBikes(Brand brand) {
-		List<BikeModel> models = null;
-		Connection conn =  null;
-		
-		try {
-			conn = ds.getConnection();
-			models = DaoFactory.getBikeModelDao(conn).getBikeModels(brand);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		return models;
+	@SuppressWarnings("unchecked")
+	private List<BikeModel> doLookupBikes(int brandId) {
+		LOG.info("Looking up bikes for brand " + brandId);
+		Query namedQuery = session.getNamedQuery(BikeModel.QUERY_BY_BRAND_ID);
+		namedQuery.setParameter("brandId", brandId);
+		List<BikeModel> bikeModels = namedQuery.list();
+		LOG.info("Found " + bikeModels.size() + " bike models for brand " + brandId);
+		return bikeModels;
 	}
 
 }

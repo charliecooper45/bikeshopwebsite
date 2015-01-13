@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
 public abstract class AbstractController extends HttpServlet {
-	//TODO: is there a way to centrally catch exceptions and deal with them?
 	private static final long serialVersionUID = 1L;
 	
 	protected static final Logger LOG = Logger.getLogger(AbstractController.class);

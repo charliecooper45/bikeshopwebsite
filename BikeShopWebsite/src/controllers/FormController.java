@@ -28,23 +28,18 @@ public class FormController extends AbstractController {
 		String form = request.getParameter("formType");
 		String jspPage = null;
 
-		try {
-			switch (form) {
-			case ("login"):
-				jspPage = doLogin(request, response);
-			case ("logout"):
-				jspPage = doLogout(request, response);
-				break;
-			case ("register"):
-				jspPage = doRegister(request, response);
-				break;
-			}
-		} catch (Exception e) {
-			LOG.info("Connection to database lost");
-			jspPage = "/error.jsp";
-		} finally {
-			getServletContext().getRequestDispatcher(jspPage).forward(request, response);
+		switch (form) {
+		case ("login"):
+			jspPage = doLogin(request, response);
+		case ("logout"):
+			jspPage = doLogout(request, response);
+			break;
+		case ("register"):
+			jspPage = doRegister(request, response);
+			break;
 		}
+		
+		getServletContext().getRequestDispatcher(jspPage).forward(request, response);
 	}
 
 	private String doLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

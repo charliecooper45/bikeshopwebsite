@@ -26,35 +26,30 @@ public class HomeController extends AbstractController {
 		String jspPage = null;
 		String action = request.getParameter("action");
 
-		try {
-			if (action == null) {
-				jspPage = "/index.jsp";
-			} else {
-				switch (action) {
-				case "login":
-					request.setAttribute("validationMessage", "");
-					request.setAttribute("email", "");
-					jspPage = "/login.jsp";
-					break;
-				case "logout":
-					jspPage = "/logout.jsp";
-					break;
-				case "register":
-					request.setAttribute("validationMessage", "");
-					jspPage = "/register.jsp";
-					break;
-				case "viewbrands":
-					doLookupBikeBrands(request, response);
-					jspPage = "/brands.jsp";
-					break;
-				}
+		if (action == null) {
+			jspPage = "/index.jsp";
+		} else {
+			switch (action) {
+			case "login":
+				request.setAttribute("validationMessage", "");
+				request.setAttribute("email", "");
+				jspPage = "/login.jsp";
+				break;
+			case "logout":
+				jspPage = "/logout.jsp";
+				break;
+			case "register":
+				request.setAttribute("validationMessage", "");
+				jspPage = "/register.jsp";
+				break;
+			case "viewbrands":
+				doLookupBikeBrands(request, response);
+				jspPage = "/brands.jsp";
+				break;
 			}
-		} catch (Exception e) {
-			LOG.info("Connection to database lost");
-			jspPage = "/error.jsp";
-		} finally {
-			getServletContext().getRequestDispatcher(jspPage).forward(request, response);
 		}
+		
+		getServletContext().getRequestDispatcher(jspPage).forward(request, response);
 	}
 
 	@SuppressWarnings("unchecked")

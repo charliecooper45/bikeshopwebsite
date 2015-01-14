@@ -47,7 +47,7 @@ public class HomeController extends AbstractController {
 				jspPage = "/register.jsp";
 				break;
 			case "viewbrands":
-				doLookupBikeBrands(request, response);
+				doLookupBikeBrands(request);
 				jspPage = "/brands.jsp";
 				break;
 			}
@@ -57,7 +57,7 @@ public class HomeController extends AbstractController {
 	}
 
 	@SuppressWarnings("unchecked")
-	private void doLookupBikeBrands(HttpServletRequest request, HttpServletResponse response) {
+	private void doLookupBikeBrands(HttpServletRequest request) {
 		Query namedQuery = session.getNamedQuery(Brand.QUERY_ALL);
 		List<Brand> brands = namedQuery.list();
 		LOG.info("Found " + brands.size() + " brands in database");

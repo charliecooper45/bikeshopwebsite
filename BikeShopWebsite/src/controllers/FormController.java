@@ -56,6 +56,7 @@ public class FormController extends AbstractController {
 
 		// check passwords match
 		if (!password.equals(confirmPassword)) {
+			//TODO: should this be using response not request?	
 			request.setAttribute("validationMessage", "Passwords do not match.");
 		} else {
 			// check an account does not already exist with the given email

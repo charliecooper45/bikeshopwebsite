@@ -12,7 +12,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @NamedQueries({
-	@NamedQuery(name=Brand.QUERY_ALL, query="from Brand")
+	@NamedQuery(name=Brand.QUERY_ALL, query="from Brand"),
+	@NamedQuery(name=Brand.QUERY_BY_ID, query="from Brand where id = :id")
 })
 @Entity
 @Table(name= "brand", catalog = "hibernate_test_database")
@@ -20,6 +21,7 @@ public class Brand implements Serializable, Comparable<Brand> {
 	private static final long serialVersionUID = 1L;
 
 	public static final String QUERY_ALL = "Brand.All";
+	public static final String QUERY_BY_ID = "Brand.By.Id";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,3 +1,9 @@
-.brand {
-	colour: green;
+#brand {
+	width: 100%;
+	text-align: center;
 }
+
+#brand h2 {
+	color: red;
+}
+

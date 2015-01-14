@@ -11,7 +11,7 @@
 	<jsp:include page="header.jsp" />
 	
 	<div id="brand">
-		${requestScope.brand}
+		<h2>${requestScope.brand}</h2>
 	</div>
 	<div id="bikes">
 	</div>

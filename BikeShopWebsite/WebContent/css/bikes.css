@@ -7,3 +7,38 @@
 	color: red;
 }
 
+#bikes {
+	width: 65%;
+	margin: 0 auto;
+	overflow-y: scroll;
+	max-height: 606px;
+}
+
+.bike {
+	background: green;
+	height: 200px;
+	margin: 0 auto;
+	border: 1px solid;
+}
+
+.bike .bikeImage {
+	background: grey;	
+	height: 180px;
+	width: 250px;
+	margin-top: 10px;
+	margin-left: 10px;
+	float: left;
+}
+
+.bike .bikeData {
+	background: red;
+	height: 180px;
+	margin-top: 10px;
+	overflow:hidden;
+	margin-right: 10px;
+}
+
+.clear {
+	clear: both;
+}
+

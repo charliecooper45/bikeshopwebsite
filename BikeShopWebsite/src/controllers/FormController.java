@@ -37,6 +37,7 @@ public class FormController extends AbstractController {
 			break;
 		}
 		
+		LOG.info("Forwarding to page: " + jspPage);
 		getServletContext().getRequestDispatcher(jspPage).forward(request, response);
 	}
 
@@ -47,6 +48,7 @@ public class FormController extends AbstractController {
 	}
 
 	private String doRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		LOG.info("Attempt to register user");
 		String jspPage = "/register.jsp";
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
@@ -57,6 +59,7 @@ public class FormController extends AbstractController {
 		// check passwords match
 		if (!password.equals(confirmPassword)) {
 			//TODO: should this be using response not request?	
+			LOG.info("Passwords do not match");
 			request.setAttribute("validationMessage", "Passwords do not match.");
 		} else {
 			// check an account does not already exist with the given email

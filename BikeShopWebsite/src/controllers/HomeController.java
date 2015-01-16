@@ -53,6 +53,7 @@ public class HomeController extends AbstractController {
 			}
 		}
 		
+		LOG.info("Forwarding to page: " + jspPage);
 		getServletContext().getRequestDispatcher(jspPage).forward(request, response);
 	}
 

@@ -8,6 +8,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 public class Main {
+	
 	public static void main(String[] args) {
 		// TODO: delete this
 		Session session = HibernateUtilities.getSessionFactory().openSession();
@@ -26,5 +27,14 @@ public class Main {
 			session.save(bikeModel);
 		}
 		tx.commit();
+		
+//		session.clear();
+//		Query namedQuery = session.getNamedQuery(Brand.QUERY_BY_ID);
+//		namedQuery.setParameter("id", 10);
+//		brand = (Brand) namedQuery.uniqueResult();
+//		System.out.println("Found brand: " + brand.getId());
+//		
+//		List<BikeModel> bikeModels = brand.getBikeModels();
+//		System.out.println("Brand " + brand.getId() + " has " + bikeModels.size() + " bike models");
 	}
 }

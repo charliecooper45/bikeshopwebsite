@@ -27,7 +27,6 @@ public class BikeController extends AbstractController {
 		getServletContext().getRequestDispatcher("/bikes.jsp").forward(request, response);
 	}
 	
-	@SuppressWarnings("unchecked")
 	private void doLookupBikes(int brandId, HttpServletRequest request) {
 		//TODO: maybe attempt to pass this data to the controller?
 		//TODO: look for tool to check for unused code
@@ -38,9 +37,10 @@ public class BikeController extends AbstractController {
 		request.setAttribute("brand", brand);
 		
 		LOG.info("Looking up bikes for brand " + brandId);
-		namedQuery = session.getNamedQuery(BikeModel.QUERY_BY_BRAND_ID);
-		namedQuery.setParameter("brandId", brandId);
-		List<BikeModel> bikeModels = namedQuery.list();
+//		namedQuery = session.getNamedQuery(BikeModel.QUERY_BY_BRAND_ID);
+//		namedQuery.setParameter("brandId", brandId);
+//		List<BikeModel> bikeModels = namedQuery.list();
+		List<BikeModel> bikeModels = brand.getBikeModels();
 		LOG.info("Found " + bikeModels.size() + " bike models for brand " + brandId);
 		request.setAttribute("bikeModels", bikeModels);
 	}

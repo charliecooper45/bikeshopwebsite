@@ -42,8 +42,10 @@ public class HibernateUtilities {
 		}
 
 		// insert bike model
-		BikeModel bikeModel = new BikeModel("Bike Model 1", "£1000", brand, null);
-		session.save(bikeModel);
+		for (int i = 1; i <= 10; i++) {
+			BikeModel bikeModel = new BikeModel("Bike Model " + i, "£1000", brand, null);
+			session.save(bikeModel);
+		}
 		tx.commit();
 	}
 }

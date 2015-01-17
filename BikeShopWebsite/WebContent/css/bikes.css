@@ -15,14 +15,14 @@
 }
 
 .bike {
-	background: green;
+	background: gray;
 	height: 200px;
 	margin: 0 auto;
 	border: 1px solid;
 }
 
 .bike .bikeImage {
-	background: grey;	
+	background: brown;
 	height: 180px;
 	width: 250px;
 	margin-top: 10px;
@@ -31,11 +31,36 @@
 }
 
 .bike .bikeData {
-	background: red;
 	height: 180px;
 	margin-top: 10px;
 	overflow:hidden;
 	margin-right: 10px;
+}
+
+.bike .bikeData h3 {
+	text-align: center;
+	height: 60px;
+	padding: 0px;
+	margin: 0px;
+}
+
+.bike .bikeData .brand {
+	height: 80px;
+	width: 50%;
+	float: left;
+	text-align: center;
+}
+
+.bike .bikeData .price {
+	height: 80px;
+	width: 50%;
+	float: left;
+	text-align: center;
+}
+
+.bike .bikeData .addToBasket {
+	height: 40px;
+	text-align: center;
 }
 
 .clear {

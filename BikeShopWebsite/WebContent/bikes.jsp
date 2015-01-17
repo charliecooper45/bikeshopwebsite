@@ -21,7 +21,16 @@
 				</div>
 				<div class="bikeData">
 					<div class="bikeName">
-						${bikeModel.name}
+						<h3>${bikeModel.name}</h3>
+						<div class="brand">
+							Brand: ${bikeModel.brand.name}
+						</div>
+						<div class="price">
+							Price: ${bikeModel.price}
+						</div>
+						<div class="addToBasket">
+							 <button type="button">Add to basket</button> 
+						</div>
 					</div>
 				</div>
 			</div>

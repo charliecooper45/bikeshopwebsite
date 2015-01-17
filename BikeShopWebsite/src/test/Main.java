@@ -4,6 +4,9 @@ import hibernate.classes.BikeModel;
 import hibernate.classes.Brand;
 import hibernate.utils.HibernateUtilities;
 
+import java.util.List;
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -28,13 +31,13 @@ public class Main {
 		}
 		tx.commit();
 		
-//		session.clear();
-//		Query namedQuery = session.getNamedQuery(Brand.QUERY_BY_ID);
-//		namedQuery.setParameter("id", 10);
-//		brand = (Brand) namedQuery.uniqueResult();
-//		System.out.println("Found brand: " + brand.getId());
-//		
-//		List<BikeModel> bikeModels = brand.getBikeModels();
-//		System.out.println("Brand " + brand.getId() + " has " + bikeModels.size() + " bike models");
+		session.clear();
+		Query namedQuery = session.getNamedQuery(Brand.QUERY_BY_ID);
+		namedQuery.setParameter("id", 10);
+		brand = (Brand) namedQuery.uniqueResult();
+		System.out.println("Found brand: " + brand.getId());
+		
+		List<BikeModel> bikeModels = brand.getBikeModels();
+		System.out.println("Brand " + brand.getId() + " has " + bikeModels.size() + " bike models");
 	}
 }

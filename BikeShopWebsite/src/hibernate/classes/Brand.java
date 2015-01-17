@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -35,7 +34,7 @@ public class Brand implements Serializable, Comparable<Brand> {
 	@Column
 	private String name;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "brand")
+	@OneToMany(mappedBy = "brand")
 	private List<BikeModel> bikeModels = new ArrayList<>(0);
 	
 	// default constructor for hibernate

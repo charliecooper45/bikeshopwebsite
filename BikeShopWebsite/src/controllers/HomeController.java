@@ -21,7 +21,6 @@ import org.hibernate.Query;
 public class HomeController extends AbstractController {
 	private static final long serialVersionUID = 1L;
 
-	// TODO: add logging
 	static {
 		HibernateUtilities.createTestData();
 	}

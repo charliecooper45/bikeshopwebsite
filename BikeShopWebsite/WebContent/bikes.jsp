@@ -7,6 +7,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Bike Shop</title>
 	<link rel="stylesheet" type="text/css" href="css/bikes.css">
+	<script src="javascript/basket.js"></script>
 </head>
 <body>
 	<jsp:include page="header.jsp" />
@@ -29,7 +30,7 @@
 							Price: ${bikeModel.price}
 						</div>
 						<div class="addToBasket">
-							 <button type="button">Add to basket</button> 
+							 <button type="button" id="${bikeModel.name}" onclick="addToBasket(this.id)">Add to basket</button> 
 						</div>
 					</div>
 				</div>

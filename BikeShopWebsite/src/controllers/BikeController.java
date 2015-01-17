@@ -38,9 +38,6 @@ public class BikeController extends AbstractController {
 		request.setAttribute("brand", brand);
 		
 		LOG.info("Looking up bikes for brand " + brandId);
-//		namedQuery = session.getNamedQuery(BikeModel.QUERY_BY_BRAND_ID);
-//		namedQuery.setParameter("brandId", brandId);
-//		List<BikeModel> bikeModels = namedQuery.list();
 		List<BikeModel> bikeModels = brand.getBikeModels();
 		LOG.info("Found " + bikeModels.size() + " bike models for brand " + brandId);
 		request.setAttribute("bikeModels", bikeModels);

@@ -1,6 +1,7 @@
 package test;
 
 import hibernate.classes.Basket;
+import hibernate.classes.Bike;
 import hibernate.classes.BikeModel;
 import hibernate.classes.Brand;
 import hibernate.classes.User;
@@ -59,5 +60,15 @@ public class Main {
 //		tx = session.beginTransaction();
 //		session.delete(user);
 //		tx.commit();
+		
+		tx = session.beginTransaction();
+		Bike bike = new Bike("1000123", bikeModels.get(0));
+		session.save(bike);
+		tx.commit();
+		
+		session.clear();
+		tx = session.beginTransaction();
+		session.delete(bikeModels.get(0));
+		tx.commit();
 	}
 }

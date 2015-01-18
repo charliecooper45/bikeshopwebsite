@@ -1,0 +1,11 @@
+div {
+	text-align: center;
+}
+
+div h3 {
+	color: white;
+}
+
+div a:hover {
+	color: red;
+}

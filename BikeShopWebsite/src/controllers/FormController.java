@@ -25,6 +25,7 @@ public class FormController extends AbstractController {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String form = request.getParameter("formType");
 
+		//TODO: should always return to previous page after doing a login/register
 		switch (form) {
 		case ("login"):
 			doLogin(request, response);

@@ -1,6 +1,7 @@
 package hibernate.classes;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,18 +10,18 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@NamedQueries({
-	@NamedQuery(name=BikeModel.QUERY_BY_NAME, query="from BikeModel where name = :name")
-})
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @Entity
 //TODO: change database name before production
 @Table(name = "bike_model", catalog = "hibernate_test_database")
 public class BikeModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	public static final String QUERY_BY_NAME = "Query.By.Name";
 
 	@Id
 	@Column(unique = true, nullable = false)
@@ -34,7 +35,11 @@ public class BikeModel implements Serializable {
 
 	@Column
 	private String image;
-
+	
+	@OneToMany(mappedBy = "bikeModel")
+	@Cascade(CascadeType.ALL)
+	private Set<Bike> bikes;
+	
 	// default constructor for hibernate
 	public BikeModel() {
 		super();
@@ -79,6 +84,8 @@ public class BikeModel implements Serializable {
 		this.image = image;
 	}
 	
-	
-
+	@Override
+	public String toString() {
+		return name;
+	}
 }

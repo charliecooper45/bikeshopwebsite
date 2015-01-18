@@ -30,38 +30,53 @@ public class HomeController extends AbstractController {
 		String action = request.getParameter("action");
 
 		if (action == null) {
-			jspPage = "/index.jsp";
+			LOG.info("Forwarding to page: " + jspPage);
+			getServletContext().getRequestDispatcher(jspPage).forward(request, response);
 		} else {
 			switch (action) {
 			case "login":
-				request.setAttribute("validationMessage", "");
-				request.setAttribute("email", "");
-				jspPage = "/login.jsp";
+				goToLogin(request, response);
 				break;
 			case "logout":
-				jspPage = "/logout.jsp";
+				goToLogout(request, response);
 				break;
 			case "register":
-				request.setAttribute("validationMessage", "");
-				jspPage = "/register.jsp";
+				goToRegister(request, response);
 				break;
 			case "viewbrands":
-				doLookupBikeBrands(request);
-				jspPage = "/brands.jsp";
+				doLookupBikeBrands(request, response);
 				break;
 			}
 		}
-		
-		LOG.info("Forwarding to page: " + jspPage);
-		getServletContext().getRequestDispatcher(jspPage).forward(request, response);
+	}
+	
+	private void goToLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("validationMessage", "");
+		request.setAttribute("email", "");
+		String jspPage = "/login.jsp";
+		forwardToPage(jspPage, request, response);
+	}
+	
+	private void goToLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String jspPage = "/logout.jsp";
+		forwardToPage(jspPage, request, response);
+	}
+	
+	private void goToRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("validationMessage", "");
+		String jspPage = "/register.jsp";
+		forwardToPage(jspPage, request, response);
 	}
 
 	@SuppressWarnings("unchecked")
-	private void doLookupBikeBrands(HttpServletRequest request) {
+	private void doLookupBikeBrands(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Query namedQuery = session.getNamedQuery(Brand.QUERY_ALL);
 		List<Brand> brands = namedQuery.list();
 		LOG.info("Found " + brands.size() + " brands in database");
 		Collections.sort(brands);
 		request.setAttribute("brands", brands);
+		
+		String jspPage = "/brands.jsp";
+		forwardToPage(jspPage, request, response);
 	}
 }

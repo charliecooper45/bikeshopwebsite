@@ -14,6 +14,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 @NamedQueries({
 	@NamedQuery(name=Brand.QUERY_ALL, query="from Brand"),
 	@NamedQuery(name=Brand.QUERY_BY_ID, query="from Brand where id = :id")
@@ -35,6 +38,7 @@ public class Brand implements Serializable, Comparable<Brand> {
 	private String name;
 	
 	@OneToMany(mappedBy = "brand")
+	@Cascade(CascadeType.ALL)
 	private List<BikeModel> bikeModels = new ArrayList<>(0);
 	
 	// default constructor for hibernate

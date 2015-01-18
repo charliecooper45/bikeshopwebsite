@@ -24,30 +24,28 @@ public class FormController extends AbstractController {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String form = request.getParameter("formType");
-		String jspPage = null;
 
 		switch (form) {
 		case ("login"):
-			jspPage = doLogin(request, response);
+			doLogin(request, response);
+			break;
 		case ("logout"):
-			jspPage = doLogout(request, response);
+			doLogout(request, response);
 			break;
 		case ("register"):
-			jspPage = doRegister(request, response);
+			doRegister(request, response);
 			break;
 		}
-		
-		LOG.info("Forwarding to page: " + jspPage);
-		getServletContext().getRequestDispatcher(jspPage).forward(request, response);
 	}
 
-	private String doLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void doLogout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getSession().invalidate();
 
-		return "/index.jsp";
+		String jspPage = "/index.jsp";
+		forwardToPage(jspPage, request, response);
 	}
 
-	private String doRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void doRegister(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		LOG.info("Attempt to register user");
 		String jspPage = "/register.jsp";
 		String email = request.getParameter("email");
@@ -83,10 +81,10 @@ public class FormController extends AbstractController {
 			}
 		}
 
-		return jspPage;
+		forwardToPage(jspPage, request, response);
 	}
 
-	private String doLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void doLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String jspPage = null;
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
@@ -116,6 +114,6 @@ public class FormController extends AbstractController {
 			}
 		}
 
-		return jspPage;
+		forwardToPage(jspPage, request, response);
 	}
 }

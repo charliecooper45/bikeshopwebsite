@@ -1,7 +1,9 @@
 package test;
 
+import hibernate.classes.Basket;
 import hibernate.classes.BikeModel;
 import hibernate.classes.Brand;
+import hibernate.classes.User;
 import hibernate.utils.HibernateUtilities;
 
 import java.util.List;
@@ -39,5 +41,23 @@ public class Main {
 		
 		List<BikeModel> bikeModels = brand.getBikeModels();
 		System.out.println("Brand " + brand.getId() + " has " + bikeModels.size() + " bike models");
+		
+//		tx = session.beginTransaction();
+//		session.delete(brand);
+//		tx.commit();
+		
+		tx = session.beginTransaction();
+		User user = new User("charliecooper98@gmail.com", "password", "Charlie", "Cooper");
+		session.save(user);
+		tx.commit();
+		
+		tx = session.beginTransaction();
+		Basket basket = new Basket(user);
+		session.save(basket);
+		tx.commit();
+		
+//		tx = session.beginTransaction();
+//		session.delete(user);
+//		tx.commit();
 	}
 }

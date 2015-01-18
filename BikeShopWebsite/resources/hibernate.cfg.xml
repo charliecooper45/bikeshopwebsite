@@ -26,5 +26,6 @@
 		<mapping class="hibernate.classes.User"></mapping>
 		<mapping class="hibernate.classes.BikeModel"></mapping>
 		<mapping class="hibernate.classes.Brand"></mapping>
+		<mapping class="hibernate.classes.Basket"></mapping>
 	</session-factory>
 </hibernate-configuration>

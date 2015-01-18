@@ -1,6 +1,8 @@
 package controllers;
 
+import hibernate.classes.Basket;
 import hibernate.classes.BikeModel;
+import hibernate.classes.User;
 
 import java.io.IOException;
 
@@ -24,6 +26,7 @@ public class BasketController extends AbstractController {
 	}
 	
 	private void addBikeToBasket(HttpServletRequest request) {
+		//TODO: pass in the User here so it can be used in the query
 		String bikeName = request.getParameter("bikeName");
 		LOG.info("Adding bike " + bikeName + " to basket");
 		
@@ -34,5 +37,8 @@ public class BasketController extends AbstractController {
 		LOG.info("Retrieved updated information for: " + bikeModel);
 		
 		// check if the user has an existing basket
+		User user = (User) request.getSession().getAttribute("user");
+		LOG.info("Check for existing basket for user: " + user);
+		namedQuery = session.getNamedQuery(Basket.QUERY_BY_USER);
 	}
 }

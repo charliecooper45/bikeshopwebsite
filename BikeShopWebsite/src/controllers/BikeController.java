@@ -24,8 +24,8 @@ public class BikeController extends AbstractController {
 		int brandId = Integer.parseInt(request.getParameter("brand"));
 		doLookupBikes(brandId, request);
 		//TODO: implement bike models jsp page
-		LOG.info("Forwarding to page: " + "/bikes.jsp");
-		getServletContext().getRequestDispatcher("/bikes.jsp").forward(request, response);
+		String jspPage = "/bikes.jsp";
+		forwardToPage(jspPage, request, response);
 	}
 	
 	private void doLookupBikes(int brandId, HttpServletRequest request) {

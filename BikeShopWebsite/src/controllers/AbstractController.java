@@ -29,7 +29,7 @@ public abstract class AbstractController extends HttpServlet {
 		HibernateUtilities.shutdown();
 	}
 	
-	public void forwardToPage(String jspPage, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void forwardToPage(String jspPage, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		LOG.info("Forwarding to page: " + jspPage);
 		getServletContext().getRequestDispatcher(jspPage).forward(request, response);
 	}

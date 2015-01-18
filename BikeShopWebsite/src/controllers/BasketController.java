@@ -1,6 +1,8 @@
 package controllers;
 
 import hibernate.classes.Basket;
+import hibernate.classes.Bike;
+import hibernate.classes.BikeModel;
 import hibernate.classes.User;
 
 import java.io.IOException;
@@ -21,10 +23,26 @@ public class BasketController extends AbstractController {
 	private static final long serialVersionUID = 1L;
 
 	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doShowBasket(request, response);
+	}
+	
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doAddBikeToBasket(request, response);
 	}
-
+	
+	private void doShowBasket(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		User user = (User) request.getSession().getAttribute("user");
+		LOG.info("Show basket for user: " + user);
+		Query namedQuery = session.getNamedQuery(Basket.QUERY_BY_USER);
+		namedQuery.setParameter("user", user);
+		Basket basket = (Basket) namedQuery.uniqueResult();
+		request.setAttribute("basket", basket);
+		String jspPage = "/basket.jsp";
+		forwardToPage(jspPage, request, response);
+	}
+	
 	private void doAddBikeToBasket(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String bikeName = request.getParameter("bikeName");
 		LOG.info("Adding bike " + bikeName + " to basket");
@@ -51,11 +69,39 @@ public class BasketController extends AbstractController {
 			} else {
 				LOG.info("Found existing basket for user: " + user);
 			}
-			addBikeToBasket(bikeName, basket);
+			boolean bikeAdded = addBikeToBasket(bikeName, basket);
+			
+			String jspPage = null;
+			if(bikeAdded) {
+				jspPage = "/basket.jsp";
+				request.setAttribute("basket", basket);
+			} else {
+				jspPage = "/basketError.jsp";
+			}
+			forwardToPage(jspPage, request, response);
 		}
 	}
 	
-	private void addBikeToBasket(String bikeName, Basket basket) {
+	private boolean addBikeToBasket(String bikeName, Basket basket) {
+		LOG.info("Looking up bike model: " + bikeName);
+		Query namedQuery = session.getNamedQuery(BikeModel.QUERY_BY_NAME);
+		namedQuery.setParameter("name", bikeName);
+		BikeModel bikeModel = (BikeModel) namedQuery.uniqueResult();
+		
 		LOG.info("Checking for bike in stock for bike model: " + bikeName);
+		namedQuery = session.getNamedQuery(Bike.QUERY_BY_BIKE_MODEL);
+		namedQuery.setParameter("bikeModel", bikeModel);
+		Bike bike = (Bike) namedQuery.uniqueResult();
+		
+		if(bike == null) {
+			LOG.info("No bikes in stock for bike model: " + bikeName);
+			return false;
+		} else {
+			Transaction tx = session.beginTransaction();
+			LOG.info("Adding bike: " + bike + " to basket");
+			basket.addBike(bike);
+			tx.commit();
+			return true;
+		}
 	}
 }

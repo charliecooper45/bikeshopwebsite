@@ -16,12 +16,16 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+@NamedQueries({
+	@NamedQuery(name = BikeModel.QUERY_BY_NAME, query = "from BikeModel where name = :name")
+})
 @Entity
 //TODO: change database name before production
 @Table(name = "bike_model", catalog = "hibernate_test_database")
 public class BikeModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	public static final String QUERY_BY_NAME = "Query.By.Name";
 
 	@Id
 	@Column(unique = true, nullable = false)

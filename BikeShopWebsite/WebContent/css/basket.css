@@ -1,0 +1,30 @@
+h3 {
+	text-align: center;
+	color: white;
+}
+
+#basket {
+	background: gray;
+	width: 65%;
+	margin: 0 auto;
+	overflow-y: scroll;
+	min-height: 375px;
+	max-height: 375px;
+}
+
+.bike {
+	background: gray;
+	height: 75px;
+	margin: 0 auto;
+	border: 1px solid;
+}
+
+.bikeName {
+	float: left;
+	margin-left: 10px;
+}
+
+.bikePrice {
+	float: right;
+	margin-right: 10px;
+}

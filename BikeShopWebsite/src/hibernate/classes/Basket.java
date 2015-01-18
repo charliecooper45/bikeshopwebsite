@@ -1,5 +1,9 @@
 package hibernate.classes;
 
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -19,7 +24,9 @@ import org.hibernate.annotations.CascadeType;
 }) 
 @Entity
 @Table(name="basket", catalog="hibernate_test_database")
-public class Basket {
+public class Basket implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	public static final String QUERY_BY_USER = "Query.By.User";
 
 	@Id
@@ -30,6 +37,10 @@ public class Basket {
 	@OneToOne(fetch = FetchType.LAZY)
 	@Cascade(CascadeType.ALL)
 	private User user;
+	
+	@OneToMany(mappedBy = "basket")
+	@Cascade(CascadeType.SAVE_UPDATE)
+	private Set<Bike> bikes = new HashSet<>();
 	
 	// default constructor for hibernate
 	public Basket() {
@@ -50,5 +61,14 @@ public class Basket {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+	public Set<Bike> getBikes() {
+		return bikes;
+	}
+	
+	public void addBike(Bike bike) {
+		bike.setBasket(this);
+		bikes.add(bike);
 	}
 }

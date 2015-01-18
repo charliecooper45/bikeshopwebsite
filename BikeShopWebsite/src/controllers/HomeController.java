@@ -26,12 +26,10 @@ public class HomeController extends AbstractController {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String jspPage = null;
 		String action = request.getParameter("action");
 
 		if (action == null) {
-			LOG.info("Forwarding to page: " + jspPage);
-			getServletContext().getRequestDispatcher(jspPage).forward(request, response);
+			goToHome(request, response);
 		} else {
 			switch (action) {
 			case "login":
@@ -48,6 +46,11 @@ public class HomeController extends AbstractController {
 				break;
 			}
 		}
+	}
+	
+	private void goToHome(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String jspPage = "/index.jsp";
+		forwardToPage(jspPage, request, response);
 	}
 	
 	private void goToLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

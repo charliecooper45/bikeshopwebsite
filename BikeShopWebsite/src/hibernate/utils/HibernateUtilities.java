@@ -1,9 +1,11 @@
 package hibernate.utils;
 
+import hibernate.classes.Bike;
 import hibernate.classes.BikeModel;
 import hibernate.classes.Brand;
 import hibernate.classes.User;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -43,6 +45,7 @@ public class HibernateUtilities {
 			brand = new Brand("Brand " + i);
 			session.save(brand);
 		}
+		
 
 		// insert bike model
 		for (int i = 1; i <= 10; i++) {
@@ -53,6 +56,15 @@ public class HibernateUtilities {
 		// insert user
 		User user = new User("c@gmail.com", BCrypt.hashpw("password", BCrypt.gensalt()), "Charlie", "Cooper");
 		session.save(user);
+		tx.commit();
+		
+		// insert bike
+		Query namedQuery = session.getNamedQuery(BikeModel.QUERY_BY_NAME);
+		namedQuery.setParameter("name", "Bike Model 1");
+		BikeModel bikeModel = (BikeModel) namedQuery.uniqueResult();
+		Bike bike = new Bike("1002321", bikeModel);
+		tx = session.beginTransaction();
+		session.save(bike);
 		tx.commit();
 	}
 }

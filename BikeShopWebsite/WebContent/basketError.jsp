@@ -10,9 +10,7 @@
 <body>
 	<jsp:include page="header.jsp" />
 	<div id="errorMessage">
-		<p class="error">Error: unable to connect to database.</p>
-		<p class="error">Please contact the system administrator.</p>
-		<p class="error">Return home <a href="/BikeShopWebsite">here</a></p>
+		<p>Unable to add bike to basket</p>
 	</div>
 	<jsp:include page="footer.jsp" />
 </body>

@@ -20,6 +20,16 @@
 #shoppingBasket {
 	width: 20%;
 	float: right;
+	color: white;
+}
+
+#shoppingBasket h4 {
+	float: right;
+}
+
+#shoppingBasket h4:hover {
+	color: red;
+	cursor: pointer;
 }
 
 a {

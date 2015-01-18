@@ -66,9 +66,14 @@ public class Main {
 		session.save(bike);
 		tx.commit();
 		
-		session.clear();
+//		session.clear();
+//		tx = session.beginTransaction();
+//		session.delete(bikeModels.get(0));
+//		tx.commit();
+		
+		// add bike to basket
 		tx = session.beginTransaction();
-		session.delete(bikeModels.get(0));
+		basket.addBike(bike);
 		tx.commit();
 	}
 }

@@ -23,6 +23,9 @@
 			</div>
 		</c:forEach>
 	</div>
+	<div id="checkout">
+		<input type="button" value="Checkout"/>
+	</div>
 	<jsp:include page="footer.jsp" />
 </body>
 </html>

@@ -19,14 +19,28 @@ h3 {
 	border: 1px solid;
 }
 
-.bikeName {
+.bikeInformation {
 	float: left;
 	margin-left: 10px;
+}
+
+.bikeInformation h4 {
+	margin-bottom: 0px;
 }
 
 .bikePrice {
 	float: right;
 	margin-right: 10px;
+}
+
+.removeFromBasket {
+	height: 100%;
+	background: green;
+	float: right;
+}
+
+.removeFromBasket input {
+	height: 75px;
 }
 
 #checkout {

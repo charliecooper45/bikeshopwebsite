@@ -29,7 +29,17 @@ public class BasketController extends AbstractController {
 	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doAddBikeToBasket(request, response);
+		String formType = request.getParameter("formType");
+		
+		switch (formType) {
+		case "addToBasket":
+			doAddBikeToBasket(request, response);
+			break;
+		case "removeFromBasket":
+			doRemoveBikeFromBasket(request, response);
+			break;
+		}
+		LOG.info("Processing form type: " + formType);		
 	}
 	
 	private void doShowBasket(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -103,5 +113,10 @@ public class BasketController extends AbstractController {
 			tx.commit();
 			return true;
 		}
+	}
+	
+	private void doRemoveBikeFromBasket(HttpServletRequest request, HttpServletResponse response) {
+		String serialNumber = request.getParameter("serialNumber");
+		LOG.info("Removing bike " + serialNumber + " from basket");
 	}
 }

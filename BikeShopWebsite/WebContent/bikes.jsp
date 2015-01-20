@@ -30,7 +30,7 @@
 							Price: ${bikeModel.price}
 						</div>
 						<div class="addToBasket">
-							 <form action="/BikeShopWebsite/BasketController" method="post">
+							 <form action="/BikeShopWebsite/BasketController?formType=addToBasket" method="post">
 							 	<input type="submit" id="${bikeModel.name}" value="Add to basket" onclick="return addToBasket(this.id)" />
 							 	<input type="hidden" name="bikeName" value="${bikeModel.name}"/>
 							 </form>

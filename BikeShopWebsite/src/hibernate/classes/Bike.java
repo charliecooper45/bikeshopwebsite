@@ -43,6 +43,10 @@ public class Bike implements Serializable {
 		this.bikeModel = bikeModel;
 	}
 	
+	public String getSerialNumber() {
+		return serialNumber;
+	}
+	
 	public BikeModel getBikeModel() {
 		return bikeModel;
 	}

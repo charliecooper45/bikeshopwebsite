@@ -118,5 +118,13 @@ public class BasketController extends AbstractController {
 	private void doRemoveBikeFromBasket(HttpServletRequest request, HttpServletResponse response) {
 		String serialNumber = request.getParameter("serialNumber");
 		LOG.info("Removing bike " + serialNumber + " from basket");
+		
+		User user = (User) request.getSession().getAttribute("user");
+		System.out.println("User found: " + user);
+		
+		Basket basket = user.getBasket();
+		System.out.println("Basket for user: " + basket);
+		
+	
 	}
 }

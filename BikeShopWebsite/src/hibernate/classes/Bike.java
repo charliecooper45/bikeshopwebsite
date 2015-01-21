@@ -12,7 +12,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @NamedQueries({
-	@NamedQuery(name = Bike.QUERY_BY_BIKE_MODEL, query = "from Bike where bikeModel = :bikeModel")
+	@NamedQuery(name = Bike.QUERY_BY_BIKE_MODEL, query = "from Bike where bikeModel = :bikeModel"),
 })
 @Entity
 @Table(name = "bike", catalog = "hibernate_test_database")

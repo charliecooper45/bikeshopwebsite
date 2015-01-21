@@ -38,7 +38,7 @@ public class Basket implements Serializable {
 	@Cascade(CascadeType.ALL)
 	private User user;
 	
-	@OneToMany(mappedBy = "basket")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "basket")
 	@Cascade(CascadeType.SAVE_UPDATE)
 	private Set<Bike> bikes = new HashSet<>();
 	
@@ -49,6 +49,7 @@ public class Basket implements Serializable {
 	
 	public Basket(User user) {
 		this.user = user;
+		user.setBasket(this);
 	}
 	
 	public int getId() {

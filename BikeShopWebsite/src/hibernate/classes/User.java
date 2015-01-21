@@ -4,9 +4,11 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @NamedQueries({
@@ -31,6 +33,9 @@ public class User implements Serializable {
 	
 	@Column
 	private String surname;
+	
+	@OneToOne
+	private Basket basket;
 	
 	// default constructor for hibernate
 	public User() {
@@ -75,11 +80,17 @@ public class User implements Serializable {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-
+	
+	public Basket getBasket() {
+		return basket;
+	}
+	
+	public void setBasket(Basket basket) {
+		this.basket = basket;
+	}
+	
 	@Override
 	public String toString() {
 		return firstName + " " + surname;
 	}
-	
-	
 }

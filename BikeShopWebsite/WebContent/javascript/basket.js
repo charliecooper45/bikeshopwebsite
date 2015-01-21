@@ -5,7 +5,7 @@ function addToBasket(bikeModel) {
 }
 
 function removeFromBasket(serialNumber) {
-	var retval = confirm("Remove bike " + serialNumber + " from shopping basket?")
+	var retVal = confirm("Remove bike " + serialNumber + " from shopping basket?");
 	
 	return retVal;
 }

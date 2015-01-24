@@ -125,6 +125,7 @@ public class BasketController extends AbstractController {
 		Basket basket = user.getBasket();
 		System.out.println("Basket for user: " + basket);
 		
-	
+		//TODO: work on this method
+		basket.removeBike(serialNumber);;
 	}
 }

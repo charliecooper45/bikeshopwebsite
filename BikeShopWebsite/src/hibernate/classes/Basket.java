@@ -68,6 +68,14 @@ public class Basket implements Serializable {
 		return bikes;
 	}
 	
+	public void removeBike(String serialNumber) {
+		for (Bike bike : bikes) {
+			if(bike.getSerialNumber().equals(serialNumber)) {
+				bikes.remove(bike);
+			}
+		}
+	}
+	
 	public void addBike(Bike bike) {
 		bike.setBasket(this);
 		bikes.add(bike);

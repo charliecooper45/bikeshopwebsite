@@ -115,7 +115,9 @@ public class BasketController extends AbstractController {
 		}
 	}
 	
-	private void doRemoveBikeFromBasket(HttpServletRequest request, HttpServletResponse response) {
+	private void doRemoveBikeFromBasket(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String jspPage = "/basket.jsp";
+		
 		String serialNumber = request.getParameter("serialNumber");
 		LOG.info("Removing bike " + serialNumber + " from basket");
 		
@@ -125,7 +127,11 @@ public class BasketController extends AbstractController {
 		Basket basket = user.getBasket();
 		System.out.println("Basket for user: " + basket);
 		
-		//TODO: work on this method
-		basket.removeBike(serialNumber);;
+		Transaction tx = session.beginTransaction();
+		basket.removeBike(serialNumber);
+		session.update(basket);
+		tx.commit();
+		
+		forwardToPage(jspPage, request, response);
 	}
 }

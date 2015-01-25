@@ -72,6 +72,8 @@ public class Basket implements Serializable {
 		for (Bike bike : bikes) {
 			if(bike.getSerialNumber().equals(serialNumber)) {
 				bikes.remove(bike);
+				bike.setBasket(null);
+				break;
 			}
 		}
 	}

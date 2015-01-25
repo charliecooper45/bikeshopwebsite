@@ -23,7 +23,6 @@ public class BikeController extends AbstractController {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int brandId = Integer.parseInt(request.getParameter("brand"));
 		doLookupBikes(brandId, request);
-		//TODO: implement bike models jsp page
 		String jspPage = "/bikes.jsp";
 		forwardToPage(jspPage, request, response);
 	}

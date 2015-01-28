@@ -28,7 +28,6 @@ public class BikeController extends AbstractController {
 	}
 	
 	private void doLookupBikes(int brandId, HttpServletRequest request) {
-		//TODO: maybe attempt to pass this data to the controller?
 		//TODO: look for tool to check for unused code
 		LOG.info("Looking up information for brand " + brandId);
 		Query namedQuery = session.getNamedQuery(Brand.QUERY_BY_ID);

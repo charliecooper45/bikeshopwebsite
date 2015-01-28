@@ -11,7 +11,7 @@
 </head>
 <body>
 	<jsp:include page="header.jsp" />
-	<h3>Your basket: ${requestScope.basket.bikes.size()}</h3>
+	<h3>Your basket:</h3>
 	<div id="basket">
 		<c:forEach items="${requestScope.basket.bikes}" var="bike" varStatus="i">
 			<div class="bike">
@@ -32,10 +32,11 @@
 		</c:forEach>
 	</div>
 	<div id="checkout">
-		<form action="/BikeShopWebsite/BasketController?formType=checkout" method="post">
+		<form action="/BikeShopWebsite/BasketController?formType=goToCheckout" method="post">
 			<c:choose>
 				<c:when test='${requestScope.basket.bikes.size() > 0}'>
 					<input type="submit" value="Checkout"/>
+					<input type="hidden" name="user" value="${sessionScope.user}"/>
 				</c:when>
 				<c:when test='${requestSCope.basket == null || requestScope.basket.bikes.size() == 0}'>
 					<input type="submit" value="Checkout" disabled/>

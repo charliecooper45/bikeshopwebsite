@@ -1,0 +1,13 @@
+h3 {
+	text-align: center;
+	color: white;
+}
+
+#checkout {
+	text-align: center;
+	color: white;
+	width: 65%;
+	margin: 0 auto;
+	min-height: 375px;
+	max-height: 375px;
+}

@@ -38,8 +38,23 @@ public class BasketController extends AbstractController {
 		case "removeFromBasket":
 			doRemoveBikeFromBasket(request, response);
 			break;
+		case ("goToCheckout"):
+			doGoToCheckout(request, response);
+			break;
 		}
 		LOG.info("Processing form type: " + formType);		
+	}
+
+	private void doGoToCheckout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String jspPage = "/checkout.jsp";
+		
+		User user = (User) request.getSession().getAttribute("user");
+		LOG.info("Go to checkout for user: " + user);
+		Query namedQuery = session.getNamedQuery(Basket.QUERY_BY_USER);
+		namedQuery.setParameter("user", user);
+		Basket basket = (Basket) namedQuery.uniqueResult();
+		request.setAttribute("basket", basket);
+		forwardToPage(jspPage, request, response);
 	}
 	
 	private void doShowBasket(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

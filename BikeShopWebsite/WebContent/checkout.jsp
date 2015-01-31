@@ -18,7 +18,9 @@
 				<li>${bike.bikeModel.brand.name} ${bike.bikeModel.name}: ${bike.bikeModel.price}</li>			
 			</c:forEach>
 		</ol>
-		<!-- Add button to complete checkout -> go to checkout controller (add card details etc) -->
+		<form action="/BikeShopWebsite/CheckoutController?formType=finishAndPay" method="post">
+			<input type="submit" value="Finish and pay"/>
+		</form>
 	</div>
 	<jsp:include page="footer.jsp" />
 </body>

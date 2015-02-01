@@ -31,6 +31,16 @@ select {
 	width: 400px;
 }
 
+.error {
+	display: block;
+	visibility: hidden;
+	color: red;
+	font-style: italic;
+	font-weight: bold;
+	margin-bottom: 2px;
+	width: 100%;
+}
+
 #paymentError {
 	display: block;
 	color: red;

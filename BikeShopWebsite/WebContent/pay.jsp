@@ -5,9 +5,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>Bike Shop</title>
 	<link rel="stylesheet" type="text/css" href="css/pay.css">
-	<script src="javascript/basket.js"></script>
+	<script src="javascript/validation.js"></script>
+	<title>Bike Shop</title>
 </head>
 <body>
 	<jsp:include page="header.jsp" />
@@ -15,8 +15,12 @@
 		<form id="payForm" action="/BikeShopWebsite/CheckoutController?formType=pay" method="post" >
 			<label for="cardNumber">Card Number:</label>
 			<input type="text" id="cardNumber" name="cardNumber" />
+			<label class="error" id="cardNumberError">Not a valid card number</label>
+			
 			<label for="expiryDate">Expiry Date:</label>
 			<input type="text" id="expiryDate" name="expiryDate" />
+			<label class="error" id="expiryDateError">Not a valid date</label>
+			
 			<label for="securityCode">Security Code:</label>
 			<input type="text" id="securityCode" name="securityCode" />
 			<label for="address">Address:</label>
@@ -279,7 +283,7 @@
 				<option value="Zimbabwe">Zimbabwe</option>
 			</select>
 			
-			<input type="submit" value="Pay" onClick="return validateRegisterForm();" />
+			<input type="submit" value="Pay" onClick="return validatePayForm();" />
 			<label id="paymentError"><%= request.getAttribute("validateMessage") %></label> 
 			<input type="hidden" name="formType" value="pay"/>
 		</form>

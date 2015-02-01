@@ -2,3 +2,58 @@ h3 {
 	text-align: center;
 	color: white;
 }
+
+form { 
+	width: 400px; 
+	display: block; 
+	margin: 0 auto;
+	overflow: hidden;
+}
+
+label {
+	color: white;
+	display: inline-block;
+	width: 155px;
+	margin-top: 5px;
+}
+
+input, select {
+	height: 15px;
+	padding: 5px;
+	width: 388px;
+	border: 1px solid #E5E5E5;
+	outline: 0;
+	font: normal 15px/150% Verdana, sans-serif;
+}
+
+select {
+	height: 30px;
+	width: 400px;
+}
+
+#paymentError {
+	display: block;
+	color: red;
+	font-style: italic;
+	font-weight: bold;
+	width: 100%;
+	text-align: center;
+}
+
+input:FOCUS {
+	border-color: black;
+	box-shadow: 0 0 8px rgba(0,0,0,.15);
+}
+
+input[type="submit"] {
+	height: 30px;
+	width: 400px;
+	background: #617798;
+	margin: 0px;
+	margin-top: 10px;
+	font-size: 14px;
+	font-weight: bold;
+	color: #FFFFFF;
+	cursor: pointer;
+	margin-bottom: 5px;
+}

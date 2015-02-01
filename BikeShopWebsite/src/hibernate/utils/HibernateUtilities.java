@@ -13,6 +13,7 @@ import org.hibernate.cfg.Configuration;
 
 import security.BCrypt;
 
+//TODO: update to latest stable build of hibernate
 public class HibernateUtilities {
 	private static final SessionFactory sessionFactory = buildSessionFactory();
 

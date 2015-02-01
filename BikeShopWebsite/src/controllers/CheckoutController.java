@@ -21,11 +21,18 @@ public class CheckoutController extends AbstractController {
 		case "finishAndPay":
 			doFinishAndPay(request, response);
 			break;
+		case "pay":
+			doPay(request, response);
 		}
+	}
+
+	private void doPay(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("Do payment here!");
 	}
 
 	private void doFinishAndPay(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String jspPage = "/pay.jsp";
+		request.setAttribute("validateMessage", "");
 		forwardToPage(jspPage, request, response);
 	}
 }

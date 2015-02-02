@@ -73,12 +73,54 @@ function validateRegisterForm() {
 }
 
 function validatePayForm() {
-	var validated = true;
+	validated = true;
 
 	// validate the card number field
 	var cardNumber = document.forms["payForm"]["cardNumber"].value;
 	validated = validateNotEmpty(cardNumber, "cardNumberError");
 
+	var date = document.forms["payForm"]["expiryDate"].value;
+	if(validated) {
+		validated = validateDate(date, "expiryDateError");
+	} else {
+		validateDate(date, "expiryDateError");
+	}
+	
+	var securityCode = document.forms["payForm"]["securityCode"].value;
+	if(validated) {
+		validated = validateNotEmpty(securityCode, "securityCodeError");
+	} else {
+		validateNotEmpty(securityCode, "securityCodeError");
+	}
+	
+	var address = document.forms["payForm"]["address"].value;
+	if(validated) {
+		validated = validateNotEmpty(address, "addressError");
+	} else {
+		validateNotEmpty(address, "addressError");
+	}
+	
+	var city = document.forms["payForm"]["city"].value;
+	if(validated) {
+		validated = validateNotEmpty(city, "cityError");
+	} else {
+		validateNotEmpty(city, "cityError");
+	}
+
+	var county = document.forms["payForm"]["county"].value;
+	if(validated) {
+		validated = validateNotEmpty(county, "countyError");
+	} else {
+		validateNotEmpty(county, "countyError");
+	}
+	
+	var postcode = document.forms["payForm"]["postcode"].value;
+	if(validated) {
+		validated = validateNotEmpty(postcode, "postcodeError");
+	} else {
+		validateNotEmpty(postcode, "postcodeError");
+	}
+	
 	return validated;
 }
 
@@ -99,10 +141,14 @@ function validateNotEmpty(value, elementId) {
 		document.getElementById(elementId).style.visibility = 'hidden';
 		return true;
 	}
-	return false;
 }
 
-function validateDate(dateString) {
-	if (!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString))
+function validateDate(dateString, elementId) {
+	if (!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString)) {
+		document.getElementById(elementId).style.visibility = 'visible';
 		return false;
+	} else {
+		document.getElementById(elementId).style.visibility = 'hidden';
+		return true;
+	}
 }

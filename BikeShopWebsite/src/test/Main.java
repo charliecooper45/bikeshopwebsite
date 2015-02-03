@@ -4,9 +4,11 @@ import hibernate.classes.Basket;
 import hibernate.classes.Bike;
 import hibernate.classes.BikeModel;
 import hibernate.classes.Brand;
+import hibernate.classes.Payment;
 import hibernate.classes.User;
 import hibernate.utils.HibernateUtilities;
 
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Query;
@@ -74,6 +76,12 @@ public class Main {
 		// add bike to basket
 		tx = session.beginTransaction();
 		basket.addBike(bike);
+		tx.commit();
+		
+		// add demo payment
+		tx = session.beginTransaction();
+		Payment payment = new Payment("10052321343538736", new Date(), user, true);
+		session.save(payment);
 		tx.commit();
 	}
 }

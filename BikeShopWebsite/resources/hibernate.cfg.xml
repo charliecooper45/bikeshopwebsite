@@ -28,5 +28,6 @@
 		<mapping class="hibernate.classes.Brand"></mapping>
 		<mapping class="hibernate.classes.Basket"></mapping>
 		<mapping class="hibernate.classes.Bike"></mapping>
+		<mapping class="hibernate.classes.Payment"></mapping>
 	</session-factory>
 </hibernate-configuration>

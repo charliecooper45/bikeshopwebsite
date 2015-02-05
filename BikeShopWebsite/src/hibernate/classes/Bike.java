@@ -21,7 +21,6 @@ public class Bike implements Serializable {
 
 	public static final String QUERY_BY_BIKE_MODEL = "Query.By.Bike.Model";
 
-	//TODO: the number of bikes attached to a BikeModel can dictate the number in stock (store procedure)
 	@Id
 	@Column(unique = true, nullable = false)
 	private String serialNumber;
@@ -31,6 +30,9 @@ public class Bike implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Basket basket;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private BikeShopOrder order;
 	
 	// default constructor for hibernate
 	public Bike() {
@@ -60,5 +62,38 @@ public class Bike implements Serializable {
 
 	public void setBasket(Basket basket) {
 		this.basket = basket;
+	}
+	
+	public BikeShopOrder getOrder() {
+		return order;
+	}
+	
+	public void setOrder(BikeShopOrder order) {
+		this.order = order;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((serialNumber == null) ? 0 : serialNumber.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Bike other = (Bike) obj;
+		if (serialNumber == null) {
+			if (other.serialNumber != null)
+				return false;
+		} else if (!serialNumber.equals(other.serialNumber))
+			return false;
+		return true;
 	}
 }

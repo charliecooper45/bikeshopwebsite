@@ -44,7 +44,16 @@ public class CheckoutController extends AbstractController {
 			DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
 			Date date = format.parse(expiryDate);
 			User user = (User) request.getSession().getAttribute("user");
-			new Payment(cardNumber, date, user, true);
+			Payment payment = new Payment(cardNumber, date, user, true);
+			boolean paymentValidated = validatePayment(payment);
+			
+			if(paymentValidated) {
+				// add payment
+				// delete basket
+				//TODO: only show bikes that are not in a current order
+			} else {
+				
+			}
 			
 			//TODO: validate payment and add order
 		} catch (ParseException e) {
@@ -52,6 +61,10 @@ public class CheckoutController extends AbstractController {
 			request.setAttribute("validateMessage", errorMessage);
 			forwardToPage("/pay.jsp", request, response);
 		}
+	}
+
+	private boolean validatePayment(Payment payment) {
+		return true;
 	}
 
 	private void doFinishAndPay(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

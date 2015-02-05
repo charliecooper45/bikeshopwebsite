@@ -4,12 +4,15 @@ import hibernate.classes.Basket;
 import hibernate.classes.Bike;
 import hibernate.classes.BikeModel;
 import hibernate.classes.Brand;
+import hibernate.classes.BikeShopOrder;
 import hibernate.classes.Payment;
 import hibernate.classes.User;
 import hibernate.utils.HibernateUtilities;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -82,6 +85,13 @@ public class Main {
 		tx = session.beginTransaction();
 		Payment payment = new Payment("10052321343538736", new Date(), user, true);
 		session.save(payment);
+		tx.commit();
+		
+		tx = session.beginTransaction();
+		Set<Bike> bikes = new HashSet<>();
+		bikes.add(bike);
+		BikeShopOrder order = new BikeShopOrder(user, bikes);
+		session.save(order);
 		tx.commit();
 	}
 }

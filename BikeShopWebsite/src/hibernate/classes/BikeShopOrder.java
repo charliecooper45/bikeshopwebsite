@@ -1,9 +1,11 @@
 package hibernate.classes;
 
+import java.util.Collections;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,22 +27,27 @@ public class BikeShopOrder {
 	@OneToOne(optional = false)
 	private User user;
 	
-	@OneToMany(mappedBy = "order")
+	@OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
 	@Cascade(CascadeType.SAVE_UPDATE)
 	private Set<Bike> bikes;
+	
+	@OneToOne(optional = false)
+	private Payment payment;
 	
 	// default constructor for hibernate
 	public BikeShopOrder() {
 		super();
 	}
 
-	public BikeShopOrder(User user, Set<Bike> bikes) {
+	public BikeShopOrder(User user, Set<Bike> bikes, Payment payment) {
 		this.user = user;
 		this.bikes = bikes;
 		
 		for (Bike bike : bikes) {
 			bike.setOrder(this);
 		}
+		
+		this.payment = payment;
 	}
 
 	public int getId() {
@@ -52,6 +59,10 @@ public class BikeShopOrder {
 	}
 
 	public Set<Bike> getBikes() {
-		return bikes;
+		return Collections.unmodifiableSet(bikes);
+	}
+	
+	public Payment getPayment() {
+		return payment;
 	}
 }

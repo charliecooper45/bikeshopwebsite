@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -19,19 +19,23 @@ import javax.persistence.Table;
 public class Bike implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	//TODO: sort out database names
 	public static final String QUERY_BY_BIKE_MODEL = "Query.By.Bike.Model";
 
 	@Id
 	@Column(unique = true, nullable = false)
 	private String serialNumber;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
+	@JoinColumn(name = "bike_model_id")
 	private BikeModel bikeModel;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
+	@JoinColumn(name = "basket_id")
 	private Basket basket;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
+	@JoinColumn(name = "order_id")
 	private BikeShopOrder order;
 	
 	// default constructor for hibernate

@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -35,6 +36,7 @@ public class BikeModel implements Serializable {
 	private String price;
 
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "brand_id")
 	private Brand brand;
 
 	@Column

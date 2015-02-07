@@ -10,6 +10,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+
 @NamedQueries({
 	@NamedQuery(name=User.QUERY_USER_BY_EMAIL, query="from User u where u.email = :email"),
 })

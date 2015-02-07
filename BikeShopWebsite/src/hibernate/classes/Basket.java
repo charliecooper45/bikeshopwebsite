@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,14 +17,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
-@NamedQueries(value = { 
-		@NamedQuery(name = Basket.QUERY_BY_USER, query = "from Basket where user = :user") 
-}) 
+@NamedQueries(value = { @NamedQuery(name = Basket.QUERY_BY_USER, query = "from Basket where user = :user") })
 @Entity
-@Table(name="basket", catalog="hibernate_test_database")
+@Table(name = "basket", catalog = "hibernate_test_database")
 public class Basket implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -33,25 +29,24 @@ public class Basket implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique = true, nullable = false)
 	private int id;
-	
-	@OneToOne(fetch = FetchType.LAZY)
-	@Cascade(CascadeType.ALL)
+
+	@OneToOne
 	private User user;
-	
-	@OneToMany(mappedBy = "basket")
-	@Cascade(CascadeType.SAVE_UPDATE)
+
+	@OneToMany(mappedBy = "basket", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	// TODO: sort out cascade type here
 	private Set<Bike> bikes = new HashSet<>();
-	
+
 	// default constructor for hibernate
 	public Basket() {
 		super();
 	}
-	
+
 	public Basket(User user) {
 		this.user = user;
 		user.setBasket(this);
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -60,24 +55,27 @@ public class Basket implements Serializable {
 		return user;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void removeUser() {
+		if (user != null) {
+			user.setBasket(null);
+			this.user = null;
+		}
 	}
-	
+
 	public Set<Bike> getBikes() {
 		return bikes;
 	}
-	
+
 	public void removeBike(String serialNumber) {
 		for (Bike bike : bikes) {
-			if(bike.getSerialNumber().equals(serialNumber)) {
+			if (bike.getSerialNumber().equals(serialNumber)) {
 				bikes.remove(bike);
 				bike.setBasket(null);
 				break;
 			}
 		}
 	}
-	
+
 	public void addBike(Bike bike) {
 		bike.setBasket(this);
 		bikes.add(bike);

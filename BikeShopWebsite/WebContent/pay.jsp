@@ -26,23 +26,23 @@
 			<label class="error" id="securityCodeError">Not a valid security code</label>
 			
 			<label for="address">Address:</label>
-			<input type="text" id="address" name="address" />
+			<input type="text" id="address" name="address" value="${sessionScope.address}"/>
 			<label class="error" id="addressError">Not a valid address</label>
 			
 			<label for="city">City:</label>
-			<input type="text" id="city" name="city" />
+			<input type="text" id="city" name="city" value="${sessionScope.city}"/>
 			<label class="error" id="cityError">Not a valid city</label>
 			
 			<label for="county">County:</label>
-			<input type="text" id="county" name="county" />
+			<input type="text" id="county" name="county" value="${sessionScope.county}"/>
 			<label class="error" id="countyError">Not a valid county</label>
 			
 			<label for="postcode">Postcode:</label>
-			<input type="text" id="postcode" name="postcode" />
+			<input type="text" id="postcode" name="postcode" value="${sessionScope.postcode}"/>
 			<label class="error" id="postcodeError">Not a valid postcode</label>
 			
 			<label for="country">Country:</label>
-			<select id ="country" name="country">
+			<select id ="country" name="country" >
 				<option value="">Country...</option>
 				<option value="Afganistan">Afghanistan</option>
 				<option value="Albania">Albania</option>

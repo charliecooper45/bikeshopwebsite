@@ -39,6 +39,13 @@ public class CheckoutController extends AbstractController {
 		}
 	}
 
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String jspPage = "/pay.jsp";
+		request.setAttribute("validateMessage", "");
+		forwardToPage(jspPage, request, response);
+	}
+
 	private void doPay(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String jspPage = null;
 		String errorMessage = null;
@@ -49,8 +56,12 @@ public class CheckoutController extends AbstractController {
 			String expiryDate = request.getParameter("expiryDate");
 			DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
 			Date date = format.parse(expiryDate);
+			String address = request.getParameter("address");
+			String city = request.getParameter("city");
+			String county = request.getParameter("county");
+			String postcode = request.getParameter("postcode");
 			User user = (User) request.getSession().getAttribute("user");
-			
+
 			Payment payment = new Payment(cardNumber, date, user, true);
 			boolean paymentValidated = validatePayment(payment);
 
@@ -58,7 +69,7 @@ public class CheckoutController extends AbstractController {
 				// TODO: validate payment and add order
 				// TODO: add logging
 				// TODO: only show bikes that are not in a current order
-				
+
 				Transaction tx = session.beginTransaction();
 				Query namedQuery = session.getNamedQuery(Basket.QUERY_BY_USER);
 				namedQuery.setParameter("user", user);
@@ -66,13 +77,19 @@ public class CheckoutController extends AbstractController {
 				session.save(payment);
 				BikeShopOrder order = new BikeShopOrder(user, basket.getBikes(), payment);
 				session.save(order);
-				
+
 				session.delete(basket);
 				tx.commit();
-				
+
 				jspPage = "/index.jsp";
 			} else {
-				// TODO: show error page
+				// set attributes
+				request.getSession().setAttribute("address", address);
+				request.getSession().setAttribute("city", city);
+				request.getSession().setAttribute("county", county);
+				request.getSession().setAttribute("postcode", postcode);
+				
+				jspPage = "/checkoutError.jsp";
 			}
 		} catch (ParseException e) {
 			jspPage = "/pay.jsp";
@@ -82,14 +99,25 @@ public class CheckoutController extends AbstractController {
 		forwardToPage(jspPage, request, response);
 	}
 
+	@SuppressWarnings("unused")
 	private boolean validatePayment(Payment payment) {
 		LOG.info("Attempting to validate payment for user " + payment.getUser().getFirstName() + " " + payment.getUser().getSurname());
-		
-		LOG.info("Payment validated");
-		return true;
+		if (false) {
+			LOG.info("Payment validation successful");
+			return true;
+		} else {
+			LOG.info("Payment validation failed");
+			return false;
+		}
 	}
 
 	private void doFinishAndPay(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// set attributes
+		request.getSession().setAttribute("address", "");
+		request.getSession().setAttribute("city", "");
+		request.getSession().setAttribute("county", "");
+		request.getSession().setAttribute("postcode", "");
+		
 		String jspPage = "/pay.jsp";
 		request.setAttribute("validateMessage", "");
 		forwardToPage(jspPage, request, response);

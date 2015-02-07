@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -33,7 +32,7 @@ public class Basket implements Serializable {
 	@OneToOne
 	private User user;
 
-	@OneToMany(mappedBy = "basket", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+	@OneToMany(mappedBy = "basket", fetch = FetchType.LAZY)
 	// TODO: sort out cascade type here
 	private Set<Bike> bikes = new HashSet<>();
 

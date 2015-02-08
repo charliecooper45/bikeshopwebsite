@@ -1,6 +1,7 @@
 package controllers;
 
 import hibernate.classes.Basket;
+import hibernate.classes.Bike;
 import hibernate.classes.BikeShopOrder;
 import hibernate.classes.Payment;
 import hibernate.classes.User;
@@ -11,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -66,19 +68,19 @@ public class CheckoutController extends AbstractController {
 			boolean paymentValidated = validatePayment(payment);
 
 			if (paymentValidated) {
-				// TODO: validate payment and add order
 				// TODO: add logging
-				// TODO: only show bikes that are not in a current order
-
 				Transaction tx = session.beginTransaction();
 				Query namedQuery = session.getNamedQuery(Basket.QUERY_BY_USER);
 				namedQuery.setParameter("user", user);
 				Basket basket = (Basket) namedQuery.uniqueResult();
-				session.save(payment);
-				BikeShopOrder order = new BikeShopOrder(user, basket.getBikes(), payment);
-				session.save(order);
-
+				Set<Bike> bikes = basket.getBikes();
+				basket.removeBikes();
+				basket.removeUser();
+				BikeShopOrder order = new BikeShopOrder(user, bikes, payment);
+				
 				session.delete(basket);
+				session.save(payment);
+				session.save(order);
 				tx.commit();
 
 				jspPage = "/index.jsp";
@@ -102,7 +104,7 @@ public class CheckoutController extends AbstractController {
 	@SuppressWarnings("unused")
 	private boolean validatePayment(Payment payment) {
 		LOG.info("Attempting to validate payment for user " + payment.getUser().getFirstName() + " " + payment.getUser().getSurname());
-		if (false) {
+		if (true) {
 			LOG.info("Payment validation successful");
 			return true;
 		} else {

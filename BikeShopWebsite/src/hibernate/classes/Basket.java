@@ -79,4 +79,11 @@ public class Basket implements Serializable {
 		bike.setBasket(this);
 		bikes.add(bike);
 	}
+
+	public void removeBikes() {
+		for (Bike bike : bikes) {
+			bike.setBasket(null);
+		}
+		bikes = null;
+	}
 }

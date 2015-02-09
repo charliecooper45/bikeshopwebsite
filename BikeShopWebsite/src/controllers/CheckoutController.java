@@ -65,10 +65,11 @@ public class CheckoutController extends AbstractController {
 			User user = (User) request.getSession().getAttribute("user");
 
 			Payment payment = new Payment(cardNumber, date, user, true);
+			LOG.info("Attempting to validate payment...");
 			boolean paymentValidated = validatePayment(payment);
 
 			if (paymentValidated) {
-				// TODO: add logging
+				LOG.info("Order received...");
 				Transaction tx = session.beginTransaction();
 				Query namedQuery = session.getNamedQuery(Basket.QUERY_BY_USER);
 				namedQuery.setParameter("user", user);
@@ -77,11 +78,13 @@ public class CheckoutController extends AbstractController {
 				basket.removeBikes();
 				basket.removeUser();
 				BikeShopOrder order = new BikeShopOrder(user, bikes, payment);
-				
 				session.delete(basket);
 				session.save(payment);
 				session.save(order);
 				tx.commit();
+				LOG.info("Deleted basket: " + basket.getId());
+				LOG.info("Inserted payment: " + payment.getId());
+				LOG.info("Inserted order: " + order.getId());
 
 				jspPage = "/index.jsp";
 			} else {
@@ -94,6 +97,7 @@ public class CheckoutController extends AbstractController {
 				jspPage = "/checkoutError.jsp";
 			}
 		} catch (ParseException e) {
+			LOG.info("Provided date is in the incorrect format -> return to pay.jsp");
 			jspPage = "/pay.jsp";
 			errorMessage = "Date is in an incorrect format";
 			request.setAttribute("validateMessage", errorMessage);

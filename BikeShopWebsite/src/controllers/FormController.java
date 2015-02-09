@@ -96,12 +96,12 @@ public class FormController extends AbstractController {
 		User user = (User) namedQuery.uniqueResult();
 
 		if (user == null) {
-			LOG.info("The user with email address " + email + " does not exist.");
+			LOG.info("The user with email address " + email + " does not exist -> return to login page");
 			request.setAttribute("email", email);
 			request.setAttribute("validationMessage", "Email address not recognised");
 			jspPage = "/login.jsp";
 		} else {
-			LOG.info("User with email address " + email + " exists. Check password...");
+			LOG.info("User with email address " + email + " exists -> check password");
 			if (!BCrypt.checkpw(password, user.getPassword())) {
 				LOG.info("Password is incorrect");
 				request.setAttribute("email", user.getEmail());

@@ -123,7 +123,7 @@ public class BasketController extends AbstractController {
 			return false;
 		} else {
 			Transaction tx = session.beginTransaction();
-			LOG.info("Adding bike: " + bike + " to basket");
+			LOG.info("Adding bike: " + bike.getSerialNumber() + " to basket");
 			basket.addBike(bike);
 			tx.commit();
 			return true;

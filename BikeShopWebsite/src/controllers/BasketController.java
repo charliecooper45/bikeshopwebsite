@@ -38,7 +38,7 @@ public class BasketController extends AbstractController {
 		case "removeFromBasket":
 			doRemoveBikeFromBasket(request, response);
 			break;
-		case ("goToCheckout"):
+		case "goToCheckout":
 			doGoToCheckout(request, response);
 			break;
 		}

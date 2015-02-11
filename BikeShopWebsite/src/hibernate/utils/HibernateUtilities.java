@@ -64,6 +64,7 @@ public class HibernateUtilities {
 		namedQuery.setParameter("name", "Bike Model 1");
 		BikeModel bikeModel = (BikeModel) namedQuery.uniqueResult();
 		Bike bike = new Bike("1002321", bikeModel);
+		bikeModel.addBike(bike);
 		tx = session.beginTransaction();
 		session.save(bike);
 		tx.commit();

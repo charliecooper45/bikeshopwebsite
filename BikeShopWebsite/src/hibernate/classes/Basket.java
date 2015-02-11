@@ -33,7 +33,7 @@ public class Basket implements Serializable {
 	private User user;
 
 	@OneToMany(mappedBy = "basket", fetch = FetchType.LAZY)
-	// TODO: sort out cascade type here
+	//TODO: configure a cascade type
 	private Set<Bike> bikes = new HashSet<>();
 
 	// default constructor for hibernate

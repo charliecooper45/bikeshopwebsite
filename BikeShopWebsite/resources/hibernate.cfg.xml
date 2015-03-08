@@ -30,5 +30,8 @@
 		<mapping class="hibernate.classes.Bike"></mapping>
 		<mapping class="hibernate.classes.Payment"></mapping>
 		<mapping class="hibernate.classes.BikeShopOrder"></mapping>
+		
+		<!-- Views -->
+		<mapping resource="views.hbm.xml"/>
 	</session-factory>
 </hibernate-configuration>

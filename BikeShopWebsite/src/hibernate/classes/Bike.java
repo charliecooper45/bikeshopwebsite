@@ -19,11 +19,10 @@ import javax.persistence.Table;
 public class Bike implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	//TODO: sort out database names
 	public static final String QUERY_BY_BIKE_MODEL = "Query.By.Bike.Model";
 
 	@Id
-	@Column(unique = true, nullable = false)
+	@Column(unique = true, nullable = false, name = "serial_number")
 	private String serialNumber;
 	
 	@ManyToOne

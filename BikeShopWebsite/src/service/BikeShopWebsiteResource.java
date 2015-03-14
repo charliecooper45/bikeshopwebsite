@@ -12,6 +12,6 @@ public class BikeShopWebsiteResource {
 	public String getAllActivities() {
 		System.out.println("Get all activities!");
 		
-		return "<b>test</b>";
+		return "<b>Service up and running</b>";
 	}
 }

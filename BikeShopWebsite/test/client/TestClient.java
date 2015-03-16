@@ -24,4 +24,8 @@ public class TestClient {
 		
 		return response.getStatus();
 	}
+
+	public int testAddBrand() {
+		return -1;
+	}
 }

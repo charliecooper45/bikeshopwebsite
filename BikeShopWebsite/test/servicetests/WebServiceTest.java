@@ -18,6 +18,6 @@ public class WebServiceTest {
 		
 		int response = client.testService();
 		
-		Assert.assertEquals("Response code should be 200", response, 200);
+		Assert.assertEquals("Response code should be 200", 200, response);
 	}
 }

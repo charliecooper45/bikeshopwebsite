@@ -16,7 +16,7 @@ public class WebServiceTest {
 	public void testService() {
 		TestClient client = new TestClient();
 		
-		int response = client.testService();
+		int response = client.testService().getStatus();
 		
 		Assert.assertEquals("Response code should be 200", 200, response);
 	}

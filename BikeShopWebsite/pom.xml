@@ -134,6 +134,13 @@
 			<artifactId>junit</artifactId>
 			<version>4.10</version>
 		</dependency>
+		
+		<!-- hibernate-validator dependency which has implementation of JSR 303 (bean validation) -->
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-validator</artifactId>
+		    <version>4.2.0.Final</version>
+		</dependency>
 	</dependencies>
 	
 	<properties>

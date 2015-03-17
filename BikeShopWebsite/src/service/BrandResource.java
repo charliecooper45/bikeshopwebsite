@@ -1,5 +1,7 @@
 package service;
 
+import hibernate.classes.Brand;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -8,8 +10,17 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import repository.BrandRepository;
+import repository.BrandRepositoryStub;
+
 @Path("brands")
-public class BikeShopWebsiteResource {
+public class BrandResource {
+	private BrandRepository brandRepository;
+	
+	public BrandResource() {
+		brandRepository = new BrandRepositoryStub();
+	}
+	
 	@GET
 	@Produces(MediaType.TEXT_HTML)
 	public String getAllActivities() {
@@ -22,8 +33,10 @@ public class BikeShopWebsiteResource {
 	@Path("addbrand")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addActivity() {
+	public Response addBrand(Brand brand) {
 		// using POST because client does not know the id of the entity being created
-		return Response.notModified().build();
+		brandRepository.create(brand);
+		
+		return Response.ok().build();
 	}
 }

@@ -1,5 +1,7 @@
 package repository;
 
-public interface BrandRepository {
+import hibernate.classes.Brand;
 
+public interface BrandRepository {
+	void create(Brand brand);
 }

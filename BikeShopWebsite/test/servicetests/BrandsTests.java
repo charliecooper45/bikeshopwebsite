@@ -1,10 +1,12 @@
 package servicetests;
 
+import hibernate.classes.Brand;
+
 import javax.ws.rs.core.Response;
 
-import hibernate.classes.Brand;
 import junit.framework.Assert;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import client.TestClient;
@@ -15,12 +17,24 @@ import client.TestClient;
  * Mar 16, 2015 7:33:25 PM
  */
 public class BrandsTests {
+	private TestClient client;
+
 	//TODO: must clear all test data for tests, possible an abstract base class to do this?
+	
+	@Before
+	public void setup() {
+		client = new TestClient();
+	}
+	
+	@Test
+	public void testGetBrands() {
+		Response response = client.testGetBrands();
+		
+		Assert.assertEquals("List of brands should be returned", 200, response.getStatus());
+	}
 	
 	@Test
 	public void testAddBrand() {
-		TestClient client = new TestClient();
-		
 		Brand brand = new Brand("Brand for test method");
 		
 		Response response = client.testAddBrand(brand);

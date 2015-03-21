@@ -23,9 +23,7 @@ public class BrandResource {
 	
 	@GET
 	@Produces(MediaType.TEXT_HTML)
-	public String getAllActivities() {
-		System.out.println("Get all activities!");
-		
+	public String checkService() {
 		return "<b>Service up and running</b>";
 	}
 	
@@ -37,6 +35,13 @@ public class BrandResource {
 		// using POST because client does not know the id of the entity being created
 		brandRepository.create(brand);
 		
+		return Response.ok().build();
+	}
+	
+	@GET
+	@Path("getbrands")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getBrands() {
 		return Response.ok().build();
 	}
 }

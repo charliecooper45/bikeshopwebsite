@@ -1,7 +1,10 @@
 package servicetests;
 
+import java.util.List;
+
 import hibernate.classes.Brand;
 
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
 import junit.framework.Assert;
@@ -29,8 +32,10 @@ public class BrandsTests {
 	@Test
 	public void testGetBrands() {
 		Response response = client.testGetBrands();
+		List<Brand> brands = response.readEntity(new GenericType<List<Brand>>() {});
 		
 		Assert.assertEquals("List of brands should be returned", 200, response.getStatus());
+		Assert.assertNotNull("Brands should not be null", brands);
 	}
 	
 	@Test

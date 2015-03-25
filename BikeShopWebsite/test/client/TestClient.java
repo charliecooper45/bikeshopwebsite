@@ -41,7 +41,7 @@ public class TestClient {
 
 	public Response testGetBrands() {
 		Response response = target.path("brands/getbrands").request(MediaType.APPLICATION_JSON)
-				.get();
+				.get(Response.class);
 		
 		return response;
 	}

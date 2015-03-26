@@ -48,7 +48,9 @@ public class BrandResource {
 	public Response getBrands() {
 		List<Brand> brands = brandRepository.read();
 		
-		//TODO: return generic entity or similar here
-		return null;
+		GenericEntity<List<Brand>> entity = new GenericEntity<List<Brand>>(brands) {};
+		
+		Response response = Response.ok(entity).build();
+		return response;
 	}
 }

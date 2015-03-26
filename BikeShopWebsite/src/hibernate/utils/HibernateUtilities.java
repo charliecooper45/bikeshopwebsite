@@ -34,6 +34,14 @@ public class HibernateUtilities {
 	public static void shutdown() {
 		getSessionFactory().close();
 	}
+	
+	public static void deleteBrands() {
+		Session session = HibernateUtilities.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		Query deleteQuery = session.createQuery("delete from Brand");
+		deleteQuery.executeUpdate();
+		tx.commit();
+	}
 
 	public static void createTestData() {
 		// TODO: this could be moved over to Maven?

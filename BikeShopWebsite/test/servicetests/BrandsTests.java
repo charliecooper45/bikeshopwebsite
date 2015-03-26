@@ -1,14 +1,17 @@
 package servicetests;
 
-import java.util.List;
-
 import hibernate.classes.Brand;
+import hibernate.utils.HibernateUtilities;
+
+import java.util.List;
 
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
 import junit.framework.Assert;
 
+import org.hibernate.Query;
+import org.hibernate.classic.Session;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,6 +30,7 @@ public class BrandsTests {
 	@Before
 	public void setup() {
 		client = new TestClient();
+		HibernateUtilities.deleteBrands();
 	}
 	
 	@Test

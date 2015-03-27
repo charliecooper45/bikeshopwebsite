@@ -8,8 +8,10 @@ import hibernate.classes.Bike;
 import hibernate.classes.BikeModel;
 import hibernate.classes.Brand;
 import hibernate.classes.User;
+import hibernate.classes.views.BikeView;
 import hibernate.utils.HibernateUtilities;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -18,7 +20,25 @@ public class Main {
 	public static void main(String[] args) {
 		// // TODO: delete this
 		Session session = HibernateUtilities.getSessionFactory().openSession();
-		Transaction tx = session.beginTransaction();
+//		Transaction tx = session.beginTransaction();
+//		// insert brand, bikemodel and bike
+//		Brand brand = new Brand("TestBrand");
+//		session.save(brand);
+//		
+//		BikeModel bikeModel = new BikeModel("TestBikeModel", "£1000", brand, null);
+//		session.save(bikeModel);
+//		
+//		Bike bike = new Bike("100001", bikeModel);
+//		session.save(bike);
+//		
+//		tx.commit();
+		
+		// attempt to map the view object to an object
+		Query namedQuery = session.getNamedQuery(BikeView.QUERY_ALL);
+		@SuppressWarnings("unchecked")
+		List<BikeView> list = namedQuery.list();
+		System.out.println(list);
+		
 		//
 		// Brand brand = null;
 		// // insert brands
@@ -125,29 +145,29 @@ public class Main {
 		// session.delete(basket);
 		//
 		// tx.commit();
-		Brand brand = new Brand("Test Brand 1");
-		BikeModel bikeModel = new BikeModel("Test 1", "100", brand, null);
-		List<BikeModel> bikeModels = new ArrayList<>();
-		bikeModels.add(bikeModel);
-		brand.setBikeModels(bikeModels);
-		session.save(brand);
-		
-		User user = new User("c@gmail.com", "password", "C", "C");
-		session.save(user);
-		
-		Bike bike = new Bike("123123", bikeModel);
-		bikeModel.addBike(bike);
-		session.save(bike);
-		
-		Basket basket = new Basket(user);
-		basket.addBike(bike);
-		session.save(basket);
-		tx.commit();
-		
-		tx = session.beginTransaction();
-		user.setBasket(null);
-		bike.setBasket(null);
-		session.delete(basket);
-		tx.commit();
+		// Brand brand = new Brand("Test Brand 1");
+		// BikeModel bikeModel = new BikeModel("Test 1", "100", brand, null);
+		// List<BikeModel> bikeModels = new ArrayList<>();
+		// bikeModels.add(bikeModel);
+		// brand.setBikeModels(bikeModels);
+		// session.save(brand);
+		//
+		// User user = new User("c@gmail.com", "password", "C", "C");
+		// session.save(user);
+		//
+		// Bike bike = new Bike("123123", bikeModel);
+		// bikeModel.addBike(bike);
+		// session.save(bike);
+		//
+		// Basket basket = new Basket(user);
+		// basket.addBike(bike);
+		// session.save(basket);
+		// tx.commit();
+		//
+		// tx = session.beginTransaction();
+		// user.setBasket(null);
+		// bike.setBasket(null);
+		// session.delete(basket);
+
 	}
 }

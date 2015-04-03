@@ -8,7 +8,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
- * Object represenation of the bike_view view in the database.
+ * Entity representation of the bike_view view in the database.
  * <br> Used in the GUI to present the bike table to the user.
  * @author Charlie
  * Mar 27, 2015 2:52:15 PM

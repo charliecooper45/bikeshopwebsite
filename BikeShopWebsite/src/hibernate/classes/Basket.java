@@ -16,13 +16,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-@NamedQueries(value = { @NamedQuery(name = Basket.QUERY_BY_USER, query = "from Basket where user = :user") })
+@NamedQueries({ 
+		@NamedQuery(name = Basket.QUERY_BY_USER, query = "from Basket where user = :user"),
+		@NamedQuery(name = Basket.QUERY_ALL, query = "from Basket") 
+})
 @Entity
 @Table(name = "basket", catalog = "hibernate_test_database")
 public class Basket implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	public static final String QUERY_BY_USER = "Query.By.User";
+	public static final String QUERY_BY_USER = "Basket.By.User";
+	public static final String QUERY_ALL = "Basket.All";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +37,6 @@ public class Basket implements Serializable {
 	private User user;
 
 	@OneToMany(mappedBy = "basket", fetch = FetchType.LAZY)
-	//TODO: configure a cascade type
 	private Set<Bike> bikes = new HashSet<>();
 
 	// default constructor for hibernate

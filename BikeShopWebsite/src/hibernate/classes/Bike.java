@@ -13,13 +13,15 @@ import javax.persistence.Table;
 
 @NamedQueries({
 	@NamedQuery(name = Bike.QUERY_BY_BIKE_MODEL, query = "from Bike where bikeModel = :bikeModel"),
+	@NamedQuery(name = Bike.QUERY_ALL, query = "from Bike")
 })
 @Entity
 @Table(name = "bike", catalog = "hibernate_test_database")
 public class Bike implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	public static final String QUERY_BY_BIKE_MODEL = "Query.By.Bike.Model";
+	public static final String QUERY_BY_BIKE_MODEL = "Bike.By.Bike.Model";
+	public static final String QUERY_ALL = "Bike.All";
 
 	@Id
 	@Column(unique = true, nullable = false, name = "serial_number")

@@ -10,14 +10,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+@NamedQueries({
+	@NamedQuery(name=Payment.QUERY_ALL, query="from Payment")
+})
 @Entity
 @Table(name = "payment", catalog = "hibernate_test_database")
 public class Payment implements Serializable{
 	private static final long serialVersionUID = 1L;
+	public static final String QUERY_ALL = "Payment.All";
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

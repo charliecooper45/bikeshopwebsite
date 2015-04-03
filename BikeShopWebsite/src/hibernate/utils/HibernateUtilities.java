@@ -1,17 +1,23 @@
 package hibernate.utils;
 
+import hibernate.classes.Basket;
 import hibernate.classes.Bike;
 import hibernate.classes.BikeModel;
+import hibernate.classes.BikeShopOrder;
 import hibernate.classes.Brand;
+import hibernate.classes.Payment;
 import hibernate.classes.User;
+
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
-
-import security.BCrypt;
 
 //TODO: update to latest stable build of hibernate
 public class HibernateUtilities {
@@ -34,7 +40,7 @@ public class HibernateUtilities {
 	public static void shutdown() {
 		getSessionFactory().close();
 	}
-	
+
 	public static void deleteBrands() {
 		Session session = HibernateUtilities.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
@@ -43,38 +49,83 @@ public class HibernateUtilities {
 		tx.commit();
 	}
 
-	public static void createTestData() {
-		// TODO: this could be moved over to Maven?
+	public static void deleteUsers() {
 		Session session = HibernateUtilities.getSessionFactory().openSession();
 		Transaction tx = session.beginTransaction();
-
-		Brand brand = null;
-		// insert brands
-		for (int i = 1; i <= 10; i++) {
-			brand = new Brand("Brand " + i);
-			session.save(brand);
-		}
-		
-
-		// insert bike model
-		for (int i = 1; i <= 10; i++) {
-			BikeModel bikeModel = new BikeModel("Bike Model " + i, "£1000", brand, null);
-			session.save(bikeModel);
-		}
-		
-		// insert user
-		User user = new User("c@gmail.com", BCrypt.hashpw("password", BCrypt.gensalt()), "Charlie", "Cooper");
-		session.save(user);
+		Query deleteQuery = session.createQuery("delete from User");
+		deleteQuery.executeUpdate();
 		tx.commit();
+	}
+
+	public static void deleteBikes() {
+		Session session = HibernateUtilities.getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		Query deleteQuery = session.createQuery("delete from Bike");
+		deleteQuery.executeUpdate();
+		tx.commit();
+	}
+
+	public static void createTestData() {
+		// TODO: this could be moved over to Maven?
+		Session session = getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		// brand
+		Brand brand = new Brand("TestBrand");
+		session.save(brand);
 		
-		// insert bike
-		Query namedQuery = session.getNamedQuery(BikeModel.QUERY_BY_NAME);
-		namedQuery.setParameter("name", "Bike Model 1");
-		BikeModel bikeModel = (BikeModel) namedQuery.uniqueResult();
-		Bike bike = new Bike("1002321", bikeModel);
-		bikeModel.addBike(bike);
-		tx = session.beginTransaction();
+		// bike model
+		BikeModel bikeModel = new BikeModel("TestBikeModel", "£1500", brand, null);
+		session.save(bikeModel);
+		
+		// bike
+		Bike bike = new Bike("100000001", bikeModel);
 		session.save(bike);
+		
+		// user
+		User user = new User("test@test.com", "q33efrdsa", "Test", "User");
+		session.save(user);
+
+		// basket
+		Basket basket = new Basket(user);
+		session.save(basket);
+		
+		// payment
+		Payment payment = new Payment("8734 2342 1231 1232", new Date(), user, true);
+		session.save(payment);
+		
+		// order
+		Set<Bike> bikes = new HashSet<>();
+		bikes.add(bike);
+		BikeShopOrder order = new BikeShopOrder(user, bikes, payment);
+		session.save(order);
+		
 		tx.commit();
+		session.close();
+	}
+
+	public static void deleteTestData() {
+		Session session = getSessionFactory().openSession();
+		Transaction tx = session.beginTransaction();
+		
+		// delete all Brands - cascades to BikeModels and Bikes
+		Query namedQuery = session.getNamedQuery(Brand.QUERY_ALL);
+		@SuppressWarnings("unchecked")
+		List<Brand> brands = namedQuery.list();
+		
+		for (Brand brand : brands) {
+			session.delete(brand);
+		}
+		
+		// delete all Users - cascade to Baskets, Payments, Orders
+		namedQuery = session.getNamedQuery(User.QUERY_ALL);
+		@SuppressWarnings("unchecked")
+		List<User> users = namedQuery.list();
+		
+		for (User user : users) {
+			session.delete(user);
+		}
+		
+		tx.commit();
+		session.close();
 	}
 }

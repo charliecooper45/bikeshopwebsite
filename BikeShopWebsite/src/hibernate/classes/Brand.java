@@ -39,7 +39,7 @@ public class Brand implements Serializable, Comparable<Brand> {
 	private String name;
 	
 	@OneToMany(mappedBy = "brand", fetch = FetchType.LAZY)
-	@Cascade(CascadeType.ALL)
+	@Cascade(CascadeType.DELETE)
 	private List<BikeModel> bikeModels = new ArrayList<>(0);
 	
 	// default constructor for hibernate

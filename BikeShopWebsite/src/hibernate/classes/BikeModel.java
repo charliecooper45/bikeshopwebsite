@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,8 +17,14 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
+
+
 @NamedQueries({
-	@NamedQuery(name = BikeModel.QUERY_BY_NAME, query = "from BikeModel where name = :name")
+	@NamedQuery(name = BikeModel.QUERY_BY_NAME, query = "from BikeModel where name = :name"),
+	@NamedQuery(name = BikeModel.QUERY_ALL, query = "from BikeModel")
 })
 @Entity
 //TODO: change database name before production
@@ -27,7 +32,8 @@ import javax.persistence.Table;
 public class BikeModel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	public static final String QUERY_BY_NAME = "Query.By.Name";
+	public static final String QUERY_BY_NAME = "BikeModel.By.Name";
+	public static final String QUERY_ALL = "BikeModel.All";
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,7 +53,8 @@ public class BikeModel implements Serializable {
 	@Column
 	private String image;
 	
-	@OneToMany(mappedBy = "bikeModel", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "bikeModel")
+	@Cascade(CascadeType.ALL)
 	private Set<Bike> bikes = new HashSet<>();
 	
 	// default constructor for hibernate

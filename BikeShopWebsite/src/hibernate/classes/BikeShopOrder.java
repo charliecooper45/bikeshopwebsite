@@ -9,16 +9,20 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
+@NamedQueries({
+	@NamedQuery(name=BikeShopOrder.QUERY_ALL, query="from BikeShopOrder")
+})
 @Entity
 @Table(name = "bikeshop_order", catalog = "hibernate_test_database")
 public class BikeShopOrder {
+	public static final String QUERY_ALL = "BikeShopOrder.All";
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique = true, nullable = false)
@@ -28,10 +32,10 @@ public class BikeShopOrder {
 	private User user;
 	
 	@OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
-	@Cascade(CascadeType.SAVE_UPDATE)
 	private Set<Bike> bikes;
 	
 	@OneToOne(optional = false)
+	//TODO: cascade here
 	private Payment payment;
 	
 	// default constructor for hibernate

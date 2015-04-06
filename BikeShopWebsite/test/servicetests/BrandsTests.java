@@ -10,8 +10,6 @@ import javax.ws.rs.core.Response;
 
 import junit.framework.Assert;
 
-import org.hibernate.Query;
-import org.hibernate.classic.Session;
 import org.junit.Before;
 import org.junit.Test;
 

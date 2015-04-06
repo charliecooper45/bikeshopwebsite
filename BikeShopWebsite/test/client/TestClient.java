@@ -1,7 +1,5 @@
 package client;
 
-import java.util.List;
-
 import hibernate.classes.Brand;
 
 import javax.ws.rs.client.Client;
@@ -41,6 +39,13 @@ public class TestClient {
 
 	public Response testGetBrands() {
 		Response response = target.path("brands/getbrands").request(MediaType.APPLICATION_JSON)
+				.get(Response.class);
+		
+		return response;
+	}
+
+	public Response testGetBikeViews() {
+		Response response = target.path("views/getbikeviews").request(MediaType.APPLICATION_JSON)
 				.get(Response.class);
 		
 		return response;

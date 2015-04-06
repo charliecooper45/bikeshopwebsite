@@ -1,6 +1,14 @@
 package servicetests;
 
+import hibernate.classes.views.BikeView;
 import hibernate.utils.HibernateUtilities;
+
+import java.util.List;
+
+import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.Response;
+
+import junit.framework.Assert;
 
 import org.junit.After;
 import org.junit.Before;
@@ -33,6 +41,12 @@ public class ViewServicesTests {
 	
 	@Test
 	public void testBikeView() {
-		System.out.println("pause here");
+		Response response = client.testGetBikeViews();	
+		
+		List<BikeView> bikes = response.readEntity(new GenericType<List<BikeView>>() {});
+		
+		Assert.assertEquals("Response from server should be OK", 200, response.getStatus());
+		Assert.assertNotNull("Bikes should not be null", bikes);
+		Assert.assertEquals("Bikes should have one bike", 1, bikes.size());
 	}
 }

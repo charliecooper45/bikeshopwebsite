@@ -11,7 +11,7 @@ import hibernate.utils.HibernateUtilities;
 import junit.framework.Assert;
 
 import org.hibernate.Query;
-import org.hibernate.classic.Session;
+import org.hibernate.Session;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,7 +29,7 @@ public class DatabaseTests {
 	
 	@Test
 	public void testDeleteData() {
-		Session session = HibernateUtilities.getSessionFactory().openSession();
+		Session session = HibernateUtilities.getSession();
 		
 		HibernateUtilities.createTestData();
 		

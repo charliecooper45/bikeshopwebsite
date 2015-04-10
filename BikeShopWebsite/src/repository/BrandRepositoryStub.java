@@ -13,7 +13,7 @@ public class BrandRepositoryStub implements BrandRepository {
 	private Session session;
 
 	public BrandRepositoryStub() {
-		session = HibernateUtilities.getSessionFactory().openSession();
+		session = HibernateUtilities.getSession();
 	}
 	
 	@Override

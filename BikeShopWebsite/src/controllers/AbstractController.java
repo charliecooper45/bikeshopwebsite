@@ -21,7 +21,7 @@ public abstract class AbstractController extends HttpServlet {
 	
 	@Override
 	public void init() throws ServletException {
-		session = HibernateUtilities.getSessionFactory().openSession();
+		session = HibernateUtilities.getSession();
 	}
 	
 	@Override

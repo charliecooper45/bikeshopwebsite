@@ -48,5 +48,9 @@ public class ViewServicesTests {
 		Assert.assertEquals("Response from server should be OK", 200, response.getStatus());
 		Assert.assertNotNull("Bikes should not be null", bikes);
 		Assert.assertEquals("Bikes should have one bike", 1, bikes.size());
+		
+		System.out.println(bikes.get(0));
+		
+		System.out.println();
 	}
 }

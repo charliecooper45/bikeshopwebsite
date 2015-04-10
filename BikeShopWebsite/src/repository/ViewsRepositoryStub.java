@@ -12,7 +12,7 @@ public class ViewsRepositoryStub implements ViewsRepository {
 	private Session session;
 
 	public ViewsRepositoryStub() {
-		session = HibernateUtilities.getSessionFactory().openSession();
+		session = HibernateUtilities.getSession();
 	}
 	
 	@Override

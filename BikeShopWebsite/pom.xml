@@ -34,7 +34,7 @@
 			<url>http://repository.jboss.org/nexus/content/groups/public/</url>
 		</repository>
 	</repositories>
-	
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -116,33 +116,26 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-		
+
 		<!-- Jersey web services -->
 		<dependency>
 			<groupId>org.glassfish.jersey.containers</groupId>
 			<artifactId>jersey-container-servlet-core</artifactId>
-			<!-- use the following artifactId if you don't need servlet 2.x compatibility -->
-			<!-- artifactId>jersey-container-servlet</artifactId -->
 		</dependency>
-		<!-- uncomment this to get JSON support -->
 		<dependency>
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-moxy</artifactId>
 		</dependency>
+
+		<!-- hibernate-validator dependency which has implementation of JSR 303 
+			(bean validation) -->
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.10</version>
-		</dependency>
-		
-		<!-- hibernate-validator dependency which has implementation of JSR 303 (bean validation) -->
-		<dependency>
-		    <groupId>org.hibernate</groupId>
-		    <artifactId>hibernate-validator</artifactId>
-		    <version>4.2.0.Final</version>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>4.2.0.Final</version>
 		</dependency>
 	</dependencies>
-	
+
 	<properties>
 		<jersey.version>2.15</jersey.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

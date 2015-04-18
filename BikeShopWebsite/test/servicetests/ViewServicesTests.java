@@ -10,7 +10,6 @@ import javax.ws.rs.core.Response;
 
 import junit.framework.Assert;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,17 +25,13 @@ public class ViewServicesTests {
 	
 	@Before
 	public void setup() {
-		
 		client = new TestClient();
+		
+		// removes all data from all tables
+		HibernateUtilities.deleteTestData();
 		
 		// add tests data to the database
 		HibernateUtilities.createTestData();
-	}
-	
-	@After
-	public void tearDown() {
-		// removes all data from all tables
-		HibernateUtilities.deleteTestData();
 	}
 	
 	@Test
@@ -50,7 +45,7 @@ public class ViewServicesTests {
 		Assert.assertEquals("Bikes should have one bike", 1, bikes.size());
 		
 		System.out.println(bikes.get(0));
-		
 		System.out.println();
+		
 	}
 }

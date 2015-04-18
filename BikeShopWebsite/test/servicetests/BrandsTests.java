@@ -8,12 +8,12 @@ import java.util.List;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.Response;
 
-import junit.framework.Assert;
-
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import client.TestClient;
+
 
 /**
  * Validates web service methods for Brands

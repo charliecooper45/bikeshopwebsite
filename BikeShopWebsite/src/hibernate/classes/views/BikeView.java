@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.annotations.Immutable;
 import org.hibernate.annotations.Subselect;
@@ -22,6 +23,7 @@ import org.hibernate.annotations.Subselect;
 @Immutable
 @Subselect("select b.serial_number as serial_number, bm.name as model_name, br.name as brand_name, b.basket_id as basket_id, b.order_id as order_id from " +
 		"bike b inner join bike_model bm on b.bike_model_id = bm.id inner join brand br on bm.brand_id = br.id")
+@XmlRootElement
 public class BikeView {
 	public static final String QUERY_ALL = "Query.All";
 

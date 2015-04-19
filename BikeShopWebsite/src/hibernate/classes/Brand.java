@@ -14,6 +14,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -24,6 +25,7 @@ import org.hibernate.annotations.CascadeType;
 })
 @Entity
 @Table(name= "brand", catalog = "hibernate_test_database")
+@XmlRootElement
 public class Brand implements Serializable, Comparable<Brand> {
 	private static final long serialVersionUID = 1L;
 

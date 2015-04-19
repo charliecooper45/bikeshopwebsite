@@ -21,7 +21,19 @@ public class ViewsResource {
 	public ViewsResource() {
 		repository = new ViewsRepositoryStub();
 	}
-
+	
+	@GET
+	@Path("getbikeview")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getBikeView() {
+		List<BikeView> bikes = repository.readBikeViews();
+		
+		BikeView entity = bikes.get(0);
+		
+		Response response = Response.ok(entity).build();
+		return response;
+	}
+	
 	@GET
 	@Path("getbikeviews")
 	@Produces(MediaType.APPLICATION_JSON)

@@ -21,8 +21,6 @@ public class ViewsRepositoryStub implements ViewsRepository {
 		@SuppressWarnings("unchecked")
 		List<BikeView> bikes = namedQuery.list();
 		
-		System.out.println(bikes.get(0));
-		
 		return bikes;
 	}
 }

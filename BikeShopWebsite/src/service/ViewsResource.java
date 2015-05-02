@@ -30,6 +30,8 @@ public class ViewsResource {
 		
 		BikeView entity = bikes.get(0);
 		
+		System.out.println(bikes);
+		
 		Response response = Response.ok(entity).build();
 		return response;
 	}

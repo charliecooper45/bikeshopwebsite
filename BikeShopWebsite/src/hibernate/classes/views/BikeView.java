@@ -26,7 +26,7 @@ import org.hibernate.annotations.Subselect;
 @Subselect("select b.serial_number as serial_number, bm.name as model_name, br.name as brand_name, b.basket_id as basket_id, b.order_id as order_id from " +
 		"bike b inner join bike_model bm on b.bike_model_id = bm.id inner join brand br on bm.brand_id = br.id")
 @XmlRootElement
-@XmlAccessorType(XmlAccessType.PROPERTY) 
+@XmlAccessorType(XmlAccessType.FIELD) 
 public class BikeView {
 	public static final String QUERY_ALL = "Query.All";
 
@@ -59,6 +59,46 @@ public class BikeView {
 		this.orderId = orderId;
 	}
 	
+	public Integer getBasketId() {
+		return basketId;
+	}
+
+	public String getBrandName() {
+		return brandName;
+	}
+
+	public String getModelName() {
+		return modelName;
+	}
+
+	public Integer getOrderId() {
+		return orderId;
+	}
+
+	public String getSerialNumber() {
+		return serialNumber;
+	}
+
+	public void setBasketId(Integer basketId) {
+		this.basketId = basketId;
+	}
+
+	public void setBrandName(String brandName) {
+		this.brandName = brandName;
+	}
+
+	public void setModelName(String modelName) {
+		this.modelName = modelName;
+	}
+
+	public void setOrderId(Integer orderId) {
+		this.orderId = orderId;
+	}
+
+	public void setSerialNumber(String serialNumber) {
+		this.serialNumber = serialNumber;
+	}
+
 	@Override
 	public String toString() {
 		return "BikeView [serialNumber=" + serialNumber + ", modelName=" + modelName + ", brandName=" + brandName + ", basketId=" + basketId
